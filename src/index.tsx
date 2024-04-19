@@ -1,10 +1,6 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import { Main } from './main';
+import ReactDOM from 'react-dom';
+import Layout from './layouts';
 import './index.css'
 
-
-const container = document.querySelector('#root');
-const root = createRoot(container);
-
-root.render(<Main />);
+const container = document.getElementById('root');
+ReactDOM.render(<Layout />, container)
