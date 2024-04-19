@@ -1,7 +1,7 @@
 import { IConfig } from '@/typings'
 
 export const config: IConfig = {
-  title: 'Antd Admin',
+  title: 'Antd Farm Admin',
   logo: 'logo.svg',
   copyright: 'Ant Design Admin  © 2024 superlbr',
   apiPrefix: '/api/v1',
