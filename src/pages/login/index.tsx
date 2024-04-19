@@ -1,8 +1,8 @@
 import React from 'react'
-import { history } from 'umi'
+import { useNavigate } from "react-router-dom";
 import { Button, Row, Input, Form } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
-import { GlobalFooter } from '@/components'
+import GlobalFooter from '@/components/GlobalFooter'
 import { config } from '@/configs'
 import { useRequest, useConfig } from '@/hooks'
 import { loginUser, ILoginUserParams } from '@/services'
@@ -20,6 +20,7 @@ const footerLinks = [
 ]
 
 const Login: React.FC = () => {
+  const navigate = useNavigate()
   const { run: runLogin, loading } = useRequest(loginUser, {
     manual: true,
   })
@@ -29,7 +30,7 @@ const Login: React.FC = () => {
   const handleFinish = (values: ILoginUserParams) => {
     runLogin(values).then(() => {
       queryUserInfo()
-      history.push('/user')
+      navigate('/user')
     })
   }
 

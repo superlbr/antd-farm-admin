@@ -1,11 +1,10 @@
 import React from 'react'
-import { useNavigate } from "react-router-dom";
 import { ConfigProvider } from 'antd'
 import {
   useRequest,
 } from '@/hooks'
 // @ts-ignore
-import { Outlet } from 'umi'
+import { Outlet } from 'react-router-dom'
 import zhCN from 'antd/locale/zh_CN';
 
 import { ConfigContext } from '@/utils/context'
@@ -13,7 +12,6 @@ import { queryUserInfo, IUserInfo } from '@/services'
 import BaseLayout from './BaseLayout'
 
 const Layout: React.FC = (props) => {
-  const navigate = useNavigate()
   const {
     data: userInfo,
     run: runQueryUserInfo,
@@ -21,7 +19,7 @@ const Layout: React.FC = (props) => {
   } = useRequest<IUserInfo>(queryUserInfo, {
     onError: (data: any) => {
       if (data.statusCode === 401) {
-        navigate('/login')
+        window.location.href = '/login'
       }
     },
   })

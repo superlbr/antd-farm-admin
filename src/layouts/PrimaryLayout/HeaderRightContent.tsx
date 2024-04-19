@@ -1,17 +1,17 @@
 import React from 'react'
-import { Dropdown, Menu, Avatar } from 'antd'
-import { history } from 'umi'
+import { Menu, Avatar } from 'antd'
+import { useNavigate } from "react-router-dom";
 import { useRequest, useConfig } from '@/hooks'
 import { logoutUser } from '@/services'
-import styles from './index.less'
 
 const { SubMenu } = Menu
 
 const NotFoundPage: React.FC = () => {
+  const navigate = useNavigate()
   const { userInfo } = useConfig()
   const { run: runLogoutUser } = useRequest(logoutUser, {
     manual: true,
-    onSuccess: () => history.push('/login'),
+    onSuccess: () => navigate('/login'),
   })
 
   return (

@@ -4,9 +4,7 @@ import ProBasicLayout, {
   MenuDataItem,
   SettingDrawerProps,
 } from '@ant-design/pro-layout'
-import { Outlet } from 'umi'
-import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router'
+import { Link, Outlet } from 'react-router-dom'
 import { menus, menuIcon, config } from '@/configs'
 import defaultSettings from '@/defaultSettings'
 import type { MenuProps } from 'antd/es/menu'
@@ -20,11 +18,10 @@ const renderMenuItem = (menus: MenuDataItem[]): MenuDataItem[] =>
   }))
 
 const PrimaryLayout: React.FC = (props) => {
-  const location = useLocation()
   const [settings] = useState<SettingDrawerProps['settings']>(defaultSettings)
   const [openKeys, setOpenKeys] = useState<string[]>([])
   const [selectedKeys, setSelectedKeys] = useState<string[]>(['/'])
-  const { pathname } = location
+  const { pathname } = window.location
   const { breadcrumbMap, menuData } = useMemo(() => getMenuData(menus), [])
 
   useEffect(() => {

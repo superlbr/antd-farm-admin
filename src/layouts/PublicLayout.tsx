@@ -1,5 +1,5 @@
 import React from 'react'
-import { Outlet } from 'umi'
+import { Outlet } from 'react-router-dom'
 
 const PublicLayout: React.FC = (props) => {
   return <><Outlet /></>

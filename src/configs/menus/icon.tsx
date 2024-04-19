@@ -13,6 +13,7 @@ import {
   BarChartOutlined,
   AreaChartOutlined,
 } from '@ant-design/icons'
+import React from 'react'
 import { IMenuIcon } from '@/typings'
 
 const menuIcon: IMenuIcon = {

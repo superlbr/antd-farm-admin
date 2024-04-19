@@ -1,6 +1,7 @@
 import path from 'path';
 import { defineConfig } from '@farmfe/core';
 import farmJsPluginSvgr from '@farmfe/js-plugin-svgr';
+import farmJsPluginLess from '@farmfe/js-plugin-less'
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -19,6 +20,8 @@ export default defineConfig({
   plugins: [
     '@farmfe/plugin-react',
     // [DOC] https://www.farmfe.org/zh/docs/plugins/official-plugins/js-svgr#options
-    farmJsPluginSvgr({})
+    farmJsPluginSvgr({}),
+    // [DOC] https://www.farmfe.org/zh/docs/plugins/official-plugins/js-less#options
+    farmJsPluginLess({}),
   ]
 });
