@@ -1,4 +1,3 @@
-import React from 'react'
 import { ConfigProvider } from 'antd'
 import {
   useRequest,
@@ -11,7 +10,7 @@ import { ConfigContext } from '@/utils/context'
 import { queryUserInfo, IUserInfo } from '@/services'
 import { router } from './router';
 
-const Layout: React.FC = (props) => {
+const Layout = () => {
   const {
     data: userInfo,
     run: runQueryUserInfo,

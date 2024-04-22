@@ -76,9 +76,6 @@ const Login: React.FC = () => {
           </Row>
         </Form>
       </div>
-      <div className={styles.footer}>
-        <GlobalFooter links={footerLinks} copyright={config.copyright} />
-      </div>
     </>
   )
 }
