@@ -1,21 +1,19 @@
 import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Menu } from 'antd'
-import { Icons } from 'components'
+import MenuIcon from '@/components/MenuIcon'
 import { pathToRegexp } from 'path-to-regexp'
-import { NavLink, withRouter } from 'umi'
+import { NavLink } from 'react-router-dom'
 import {
   arrayToTree,
   queryAncestors,
-} from 'utils'
+} from '@/utils'
 import store from 'store'
 
 const { SubMenu } = Menu
 
 // menuParentId = mpid
 // breadcrumbParentId = bpid
-
-@withRouter
 class Menus extends PureComponent {
   state = {
     openKeys: store.get('openKeys') || [],
@@ -41,7 +39,7 @@ class Menus extends PureComponent {
 
   generateMenus = data => {
     return data.map(item => {
-      const ItemIcon = Icons[item.icon]
+      const ItemIcon = MenuIcon[item.icon]
       if (item.children) {
         return (
           <SubMenu

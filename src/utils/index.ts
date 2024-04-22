@@ -36,6 +36,33 @@ export function arrayToTree(
 }
 
 /**
+ * In an array of objects, specify an object that traverses the objects whose parent ID matches.
+ * @param   {array}     array     The Array need to Converted.
+ * @param   {string}    current   Specify the object that needs to be queried.
+ * @param   {string}    parentId  The alias of the parent ID of the object in the array.
+ * @param   {string}    id        The alias of the unique ID of the object in the array.
+ * @return  {array}    Return a key array.
+ */
+export function queryAncestors(array: any[], current: any, parentId: string, id = 'id') {
+  const result = [current]
+  const hashMap = new Map()
+  array.forEach(item => hashMap.set(item[id], item))
+
+  const getPath = (cur: { [x: string]: any }) => {
+    if (cur) {
+      const currentParentId = hashMap.get(cur[id])[parentId]
+      if (currentParentId) {
+        result.push(hashMap.get(currentParentId))
+        getPath(hashMap.get(currentParentId))
+      } 
+    }
+  }
+
+  getPath(current)
+  return result
+}
+
+/**
  * Query which layout should be used for the current path based on the configuration.
  * @param   {layouts}     layouts   Layout configuration.
  * @param   {pathname}    pathname  Path name to be queried.

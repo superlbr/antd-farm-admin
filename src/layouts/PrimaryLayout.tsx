@@ -58,8 +58,6 @@ function PrimaryLayout() {
     })
   }
 
-
-
   // Find a route that matches the pathname.
   const currentRoute = routeList.find(
     _ => _.route && pathToRegexp(_.route).exec(location.pathname)
@@ -82,12 +80,6 @@ function PrimaryLayout() {
     onFindallNotifications() {
       navigate(`/account/notification`)
     },
-    onSignOut() {
-      dispatch({ type: 'app/logout' })
-    },
-    onUserProfile() {
-      navigate(`/account/admin/${user!.uid}`)
-    },
   }
 
   const siderProps = {
@@ -96,17 +88,6 @@ function PrimaryLayout() {
     isMobile: settings.isMobile,
     collapsed: settings.collapsed,
     onCollapseChange,
-    onThemeChange(newTheme: string) {
-      dispatch({
-        type: 'updateState',
-        payload: {
-          key: 'settings',
-          params: {
-            theme: newTheme,
-          }
-        },
-      })
-    },
   }
   return (
     (<>
@@ -124,7 +105,7 @@ function PrimaryLayout() {
               height: '100vh',
             }}
           >
-            <Sider {...siderProps} collapsed={false} />
+            <Sider {...siderProps} />
           </Drawer>
         ) : (
           <Sider {...siderProps} />

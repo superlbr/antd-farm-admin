@@ -2,7 +2,7 @@ import { createStore } from 'redux';
 
 export interface GlobalState {
 	settings: Record<string, any>;
-	userInfo?: {
+	userInfo: {
 		uid?: number;
 		name?: string;
 		avatar?: string;
