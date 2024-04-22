@@ -1,7 +1,16 @@
-import menus from './menus'
-import menuIcon from './menus/icon'
+import { IConfig } from '@/typings'
 
-export * from './default'
-export * from './constants'
+export const config: IConfig = {
+  title: 'Antd Farm Admin',
+  copyright: 'Ant Design Admin  © 2024 superlbr',
+  apiPrefix: '/api/v1',
 
-export { menus, menuIcon }
+  /* Layout configuration, specify which layout to use for route. */
+  layouts: [
+    {
+      name: 'primary',
+      include: [/.*/],
+      exlude: [/\/login/],
+    },
+  ],
+}

@@ -12,7 +12,8 @@ const LayoutMap = {
 }
 
 const BaseLayout: React.FC = (props) => {
-  const Container = LayoutMap[queryLayout(config.layouts, window.location.pathname)]
+  const curLayout = queryLayout(config.layouts, window.location.pathname)
+  const Container = LayoutMap[curLayout]
   return <Container><Outlet /></Container>
 }
 

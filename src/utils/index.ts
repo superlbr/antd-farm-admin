@@ -1,19 +1,5 @@
 import { cloneDeep } from 'lodash'
-import { pathToRegexp } from 'path-to-regexp'
-
-/**
- * Query objects that specify keys and values in an array where all values are objects.
- * @param   {array}         array   An array where all values are objects, like [{key:1},{key:2}].
- * @param   {string}        key     The key of the object that needs to be queried.
- * @param   {string}        value   The value of the object that needs to be queried.
- * @return  {object|undefined}   Return frist object when query success.
- */
-export function queryArray(array, key, value) {
-  if (!Array.isArray(array)) {
-    return
-  }
-  return array.find((_) => _[key] === value)
-}
+import { Path, pathToRegexp } from 'path-to-regexp'
 
 /**
  * Convert an array to a tree-structured array.
@@ -24,7 +10,7 @@ export function queryArray(array, key, value) {
  * @return  {array}    Return a tree-structured array.
  */
 export function arrayToTree(
-  array,
+  array = [],
   id = 'id',
   parentId = 'pid',
   children = 'children'
@@ -38,7 +24,7 @@ export function arrayToTree(
   })
 
   data.forEach((item) => {
-    const hashParent = hash[item[parentId]]
+    const hashParent: any = hash[item[parentId]]
     if (hashParent) {
       !hashParent[children] && (hashParent[children] = [])
       hashParent[children].push(item)
@@ -55,10 +41,10 @@ export function arrayToTree(
  * @param   {pathname}    pathname  Path name to be queried.
  * @return  {string}   Return frist object when query success.
  */
-export function queryLayout(layouts, pathname) {
+export function queryLayout(layouts: any, pathname: string) {
   let result = 'public'
 
-  const isMatch = (regepx) => {
+  const isMatch = (regepx: Path) => {
     return regepx instanceof RegExp
       ? regepx.test(pathname)
       : pathToRegexp(regepx).exec(pathname)

@@ -3,7 +3,8 @@ import { defineConfig } from '@farmfe/core';
 import farmJsPluginSvgr from '@farmfe/js-plugin-svgr';
 import farmJsPluginLess from '@farmfe/js-plugin-less'
 
-const isDevelopment = process.env.NODE_ENV === 'development';
+const { NODE_ENV } = typeof process == 'undefined' ? import.meta.env : process.env;
+const isDevelopment = NODE_ENV === 'development';
 
 export default defineConfig({
   // compile options

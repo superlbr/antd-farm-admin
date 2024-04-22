@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './404.less'
+import styles from './404.module.less'
 
 const NotFoundPage: React.FC = () => (
   <div className={styles.error}>

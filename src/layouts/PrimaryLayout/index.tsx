@@ -5,15 +5,18 @@ import ProBasicLayout, {
   SettingDrawerProps,
 } from '@ant-design/pro-layout'
 import { Link, Outlet } from 'react-router-dom'
-import { menus, menuIcon, config } from '@/configs'
+import MenuIcon from '@/components/MenuIcon'
+import menus from '@/configs/menus'
+import { config } from '@/configs'
 import defaultSettings from '@/defaultSettings'
 import type { MenuProps } from 'antd/es/menu'
 import HeaderRightContent from './HeaderRightContent'
+import logoUrl from '@/assets/logo.svg'
 
 const renderMenuItem = (menus: MenuDataItem[]): MenuDataItem[] =>
   menus.map(({ icon, children, ...item }) => ({
     ...item,
-    icon: icon && menuIcon[icon as string],
+    icon: icon && MenuIcon[icon as string],
     children: children && renderMenuItem(children),
   }))
 
@@ -60,7 +63,7 @@ const PrimaryLayout: React.FC = (props) => {
       <ProBasicLayout
         {...settings}
         title={config.title}
-        logo={config.logo}
+        logo={logoUrl}
         menuDataRender={menuDataRender}
         menuItemRender={menuItemRender}
         menuProps={menuProps}

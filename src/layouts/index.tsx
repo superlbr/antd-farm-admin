@@ -6,10 +6,10 @@ import {
 // @ts-ignore
 import { Outlet } from 'react-router-dom'
 import zhCN from 'antd/locale/zh_CN';
-import { BrowserRouter } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
 import { ConfigContext } from '@/utils/context'
 import { queryUserInfo, IUserInfo } from '@/services'
-import BaseLayout from './BaseLayout'
+import { router } from './router';
 
 const Layout: React.FC = (props) => {
   const {
@@ -36,9 +36,7 @@ const Layout: React.FC = (props) => {
   return (
     <ConfigContext.Provider value={globalConfig}>
       <ConfigProvider locale={zhCN}>
-        <BrowserRouter>
-          <BaseLayout><Outlet /></BaseLayout>
-        </BrowserRouter>
+        <RouterProvider router={router} />
       </ConfigProvider>
     </ConfigContext.Provider>
   )

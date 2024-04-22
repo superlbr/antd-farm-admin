@@ -11,7 +11,7 @@ const NotFoundPage: React.FC = () => {
   const { userInfo } = useConfig()
   const { run: runLogoutUser } = useRequest(logoutUser, {
     manual: true,
-    onSuccess: () => navigate('/login'),
+    onSuccess: () => window.location.href = "/login",
   })
 
   return (

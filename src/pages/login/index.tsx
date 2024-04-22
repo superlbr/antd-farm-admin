@@ -1,12 +1,13 @@
 import React from 'react'
-import { useNavigate } from "react-router-dom";
 import { Button, Row, Input, Form } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
 import GlobalFooter from '@/components/GlobalFooter'
 import { config } from '@/configs'
 import { useRequest, useConfig } from '@/hooks'
 import { loginUser, ILoginUserParams } from '@/services'
-import styles from './index.less'
+
+import styles from './index.module.less'
+import logoUrl from '@/assets/logo.svg?inline'
 
 const FormItem = Form.Item
 
@@ -20,7 +21,6 @@ const footerLinks = [
 ]
 
 const Login: React.FC = () => {
-  const navigate = useNavigate()
   const { run: runLogin, loading } = useRequest(loginUser, {
     manual: true,
   })
@@ -30,7 +30,7 @@ const Login: React.FC = () => {
   const handleFinish = (values: ILoginUserParams) => {
     runLogin(values).then(() => {
       queryUserInfo()
-      navigate('/user')
+      window.location.replace('/user')
     })
   }
 
@@ -38,7 +38,7 @@ const Login: React.FC = () => {
     <>
       <div className={styles.form}>
         <div className={styles.logo}>
-          <img alt="logo" src={config.logo} />
+          <img alt="logo" src={logoUrl} />
           <span>{config.title}</span>
         </div>
         <Form onFinish={handleFinish}>
@@ -54,7 +54,7 @@ const Login: React.FC = () => {
             rules={[{ required: true, message: 'Please input your password!' }]}
             hasFeedback
           >
-            <Input.Password placeholder={t`Password`} />
+            <Input.Password placeholder={`Password`} />
           </FormItem>
           <Row>
             <Button

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Avatar, Button, Table } from 'antd'
 import { Link } from 'react-router-dom';
 import { useRequest } from '@/hooks'
-import { Page } from '@/components'
+import Page from '@/components/Page'
 import { queryUserList } from '@/services'
 import type {
   IUserItem,
@@ -10,6 +10,7 @@ import type {
   IQueryUserListParams,
 } from '@/services'
 import { ColumnType } from '@/typings'
+import './mock'
 import styles from './index.less'
 
 const columns: ColumnType<IUserItem>[] = [
