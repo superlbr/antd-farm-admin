@@ -1,8 +1,7 @@
 /* global window */
 /* global document */
 import React, { useEffect } from 'react'
-import GlobalFooter from '@/components/GlobalFooter'
-import { Header, Bread, Sider } from '@/components/Layout'
+import { Header, Bread, Sider, Footer } from '@/components/Layout'
 import { Drawer, FloatButton, Layout } from 'antd';
 import { enquireScreen, unenquireScreen } from 'enquire-js'
 import { useDispatch, useSelector } from 'react-redux'
@@ -124,7 +123,7 @@ function PrimaryLayout() {
             className={styles.backTop}
             target={() => document.querySelector('#primaryLayout') as HTMLElement}
           />
-          <GlobalFooter
+          <Footer
             copyright={config.copyright}
             links={config.links}
           />

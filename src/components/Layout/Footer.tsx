@@ -8,18 +8,15 @@ interface LinkItem {
   blankTarget?: boolean
 }
 
-interface GlobalFooterProps {
+interface FooterProps {
   links?: LinkItem[]
   copyright?: React.ReactNode
 }
 
-const GlobalFooter: React.FC<GlobalFooterProps> = ({
-  links = [],
-  copyright,
-}) => {
+const Footer = ({ links, copyright }: FooterProps) => {
   return (
-    <footer className={styles.globalFooter}>
-      <div className={styles.links}>
+    <footer className={styles.footer}>
+      {links && <div className={styles.links}>
         {links.map((link) => (
           <a
             key={link.key}
@@ -31,10 +28,10 @@ const GlobalFooter: React.FC<GlobalFooterProps> = ({
             {link.title}
           </a>
         ))}
-      </div>
+      </div>}
       {copyright && <div className={styles.copyright}>{copyright}</div>}
     </footer>
   )
 }
 
-export default GlobalFooter
+export default Footer

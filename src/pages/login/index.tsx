@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button, Row, Input, Form } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
-import GlobalFooter from '@/components/GlobalFooter'
 import { config } from '@/configs'
 import { useRequest, useConfig } from '@/hooks'
 import { loginUser, ILoginUserParams } from '@/services'
