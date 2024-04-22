@@ -1,5 +1,4 @@
-import React, { PureComponent, Fragment } from 'react'
-import PropTypes from 'prop-types'
+import React, { Fragment } from 'react'
 import { 
   ArrowsAltOutlined, BellOutlined, MenuFoldOutlined, MenuUnfoldOutlined
 } from '@ant-design/icons'
@@ -12,28 +11,24 @@ import styles from './Header.less'
 const { SubMenu } = Menu
 const { Paragraph } = Typography;
 
-class Header extends PureComponent {
-  handleClickMenu = e => {
+function Header () {
+  const handleClickMenu = e => {
     e.key === 'SignOut' && this.props.onSignOut()
     e.key === 'Profile' && this.props.onUserProfile()
   }
-  screenFull = () => {
+
+  const screenFull = () => {
     if (screenfull.isEnabled) screenfull.toggle()
   }
 
-  onDealNotification = item => {
+  const onDealNotification = item => {
     if (item.route) {
       window.open(item.route)
     } else if (item.bill_id) {
       window.open(`/bill/trade/${item.bill_id}`)
     }
   }
-
-  preventDefault = e => {
-    e.preventDefault();
-  }
-
-  render() {
+  
     const {
       fixed,
       user,
@@ -91,7 +86,7 @@ class Header extends PureComponent {
           <BellOutlined className={styles.iconFont} />
         </Badge>
       </Popover>,
-      <Menu key="menu" mode="horizontal" onClick={this.handleClickMenu}>
+      <Menu key="menu" mode="horizontal" onClick={handleClickMenu}>
         <SubMenu
           key="User"
           title={
@@ -117,7 +112,7 @@ class Header extends PureComponent {
       >
         <div
           className={styles.button}
-          onClick={onCollapseChange.bind(this, !collapsed)}
+          onClick={onCollapseChange(!collapsed)}
         >
           { collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined /> }
         </div>
@@ -126,19 +121,6 @@ class Header extends PureComponent {
         </div>
       </Layout.Header>
     )
-  }
-}
-
-Header.propTypes = {
-  fixed: PropTypes.bool,
-  menus: PropTypes.array,
-  notifications: PropTypes.array,
-  user: PropTypes.object,
-  collapsed: PropTypes.bool,
-  onSignOut: PropTypes.func,
-  onUserProfile: PropTypes.func,
-  onUpdateNotifications: PropTypes.func,
-  onCollapseChange: PropTypes.func,
 }
 
 export default Header
