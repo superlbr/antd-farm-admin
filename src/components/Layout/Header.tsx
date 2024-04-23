@@ -2,15 +2,19 @@ import React, { Fragment, useState } from 'react'
 import {
   ArrowsAltOutlined, BellOutlined, MenuFoldOutlined, MenuUnfoldOutlined
 } from '@ant-design/icons'
-import { Menu, Layout, Avatar, Popover, Badge, List, Tag, Typography } from 'antd'
-import { COMMON } from '@/configs/constants'
+import { 
+  Menu, Layout, Avatar, Popover, Badge, List, Tag, Typography
+} from 'antd'
 import classnames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import screenfull from 'screenfull'
-import styles from './Header.module.less'
 import { useNavigate } from 'react-router-dom'
+
+import styles from './Header.module.less'
 import { GlobalState } from '@/store'
 import { config } from '@/configs'
+import { COMMON } from '@/configs/constants'
+import defaultAvatar from '@/assets/avatar.jpg'
 
 const { SubMenu } = Menu
 const { Paragraph } = Typography;
@@ -110,7 +114,7 @@ function Header({ }) {
         key="User"
         title={
           <Fragment>
-            <Avatar style={{ marginRight: 12 }} src={userInfo.avatar ? (userInfo.avatar + '?x-oss-process=image/resize,m_fixed,h_300,w_300') : ''} />
+            <Avatar style={{ marginRight: 12 }} src={userInfo.avatar ? userInfo.avatar : defaultAvatar } />
             <span>{userInfo.name}</span>
           </Fragment>
         }

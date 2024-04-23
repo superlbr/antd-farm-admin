@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Avatar, Button, Table } from 'antd'
 import { Link } from 'react-router-dom';
 import { useRequest } from '@/hooks'
-import Page from '@/components/Page'
 import { queryUserList } from '@/services'
 import type {
   IUserItem,
@@ -84,7 +83,7 @@ const columns: ColumnType<IUserItem>[] = [
   },
 ]
 
-const UserPage: React.FC = () => {
+function UserPage() {
   const [current, setCurrent] = useState<number>(1)
   const [pageSize, setPageSize] = useState<number>(10)
   const {
@@ -111,28 +110,26 @@ const UserPage: React.FC = () => {
     current,
     pageSize,
     total,
-    showTotal: (total) => `Total ${total} Items`,
+    showTotal: (total: number) => `Total ${total} Items`,
   }
 
   return (
-    <Page inner>
-      <div className={styles.error}>
-        <Table
-          bordered
-          loading={loading}
-          dataSource={list}
-          columns={columns}
-          className={styles.table}
-          scroll={{ x: 1200 }}
-          rowKey={(record) => record.id}
-          pagination={pagination}
-          onChange={(page) => {
-            setCurrent(page.current as number)
-            setPageSize(page.pageSize as number)
-          }}
-        />
-      </div>
-    </Page>
+    <div className={styles.error}>
+      <Table
+        bordered
+        loading={loading}
+        dataSource={list}
+        columns={columns}
+        className={styles.table}
+        scroll={{ x: 1200 }}
+        rowKey={(record: { id: any; }) => record.id}
+        pagination={pagination}
+        onChange={(page: { current: number; pageSize: number; }) => {
+          setCurrent(page.current as number)
+          setPageSize(page.pageSize as number)
+        }}
+      />
+    </div>
   )
 }
 

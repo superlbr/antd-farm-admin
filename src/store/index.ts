@@ -26,13 +26,20 @@ const initialState: GlobalState = {
 		  level: 1,
 		  icon: 'laptop',
 		  name: '首页',
-		  children: [{
-			id: 2,
-			level: 2,
-			name: '监控页',
-			router: '/dashboard/monitor',
-		  }]
+		  router: '/dashboard/monitor',
 		},
+		{
+			id: 2,
+			level: 1,
+			icon: 'laptop',
+			name: '用户',
+			children: [{
+			  id: 2,
+			  level: 2,
+			  name: '用户列表',
+			  router: '/user/list',
+			}]
+		  },
 	  ],
     permissions: [],
 };
