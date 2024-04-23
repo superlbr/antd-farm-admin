@@ -9,7 +9,7 @@ import enUS from 'antd/locale/en_US';
 import store from './store';
 import { router } from './router';
 import './index.css';
-import useStorage from './utils/useStorage';
+import useStorage from './hooks/useStorage';
 
 function Index() {
   const [lang, setLang] = useStorage('arco-lang', 'en-US');

@@ -11,7 +11,7 @@ import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { pathToRegexp } from 'path-to-regexp'
 import { config } from '@/configs'
 import { queryAncestors } from '@/utils'
-import MenuIcon from '@/components/MenuIcon'
+import Icons from '@/components/Icons'
 import styles from './PrimaryLayout.module.less'
 import { GlobalState } from '@/store';
 import NotFoundPage from '../pages/404';
@@ -80,7 +80,7 @@ function PrimaryLayout() {
 
   const generateBreadcrumbs = (paths = []) => {
     return paths.filter(x => x).map((item, key) => {
-      const ItemIcon = MenuIcon[item.icon]
+      const ItemIcon = Icons[item.icon]
       const content = (
         <>
           {item.icon && ItemIcon &&

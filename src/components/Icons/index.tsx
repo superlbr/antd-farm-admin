@@ -1,3 +1,12 @@
+/**
+ * Icons
+ * @description 动态图标 - 优化引入尺寸
+ * @param {string} key - 图标key
+ * @return {React.ReactNode} - 返回图标组件
+ * @example
+ * import { Icons } from '@/components'
+ * <Icons key="pay-circle-o" />
+ */
 import {
   PayCircleOutlined,
   ShoppingCartOutlined,
@@ -18,7 +27,7 @@ export interface IMenuIcon {
   [key: string]: React.ReactNode
 }
 
-const MenuIcon: IMenuIcon = {
+const Icons: IMenuIcon = {
   'pay-circle-o': <PayCircleOutlined />,
   'shopping-cart': <ShoppingCartOutlined />,
   'camera-o': <CameraOutlined />,
@@ -34,4 +43,4 @@ const MenuIcon: IMenuIcon = {
   edit: <EditOutlined />,
 }
 
-export default MenuIcon
+export default Icons

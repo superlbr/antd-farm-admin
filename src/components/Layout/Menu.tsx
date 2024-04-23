@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Menu } from 'antd'
-import MenuIcon from '@/components/MenuIcon'
+import Icons from '@/components/Icons'
 import { pathToRegexp } from 'path-to-regexp'
 import { NavLink } from 'react-router-dom'
 import {
@@ -42,7 +42,7 @@ function Menus({ menus = [], collapsed, isMobile, theme }) {
 
   const generateMenus = data => {
     return data.map(item => {
-      const ItemIcon = MenuIcon[item.icon]
+      const ItemIcon = Icons[item.icon]
       if (item.children) {
         return (
           <SubMenu
