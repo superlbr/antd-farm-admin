@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import {
   ArrowsAltOutlined, BellOutlined, MenuFoldOutlined, MenuUnfoldOutlined
 } from '@ant-design/icons'
@@ -113,10 +113,10 @@ function Header({ }) {
       <SubMenu
         key="User"
         title={
-          <Fragment>
+          <>
             <Avatar style={{ marginRight: 12 }} src={userInfo.avatar ? userInfo.avatar : defaultAvatar } />
-            <span>{userInfo.name}</span>
-          </Fragment>
+            <span>{ userInfo.name || '用户' }</span>
+          </>
         }
       >
         <Menu.Item key="Profile">个人信息</Menu.Item>
