@@ -14,7 +14,6 @@ export interface GlobalState {
 
 const initialState: GlobalState = {
 	settings: {
-		lang: 'en-US',
 		isMobile: false,
         theme: "light",
 		collapsed: false,

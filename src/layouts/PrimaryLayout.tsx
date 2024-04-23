@@ -1,13 +1,17 @@
 /* global window */
 /* global document */
 import React, { useEffect } from 'react'
-import { Header, Bread, Sider, Footer } from '@/components/Layout'
-import { Drawer, FloatButton, Layout } from 'antd';
+import { Header, Sider, Footer } from '@/components/Layout'
+import { 
+  Breadcrumb, Drawer, FloatButton, Layout
+} from 'antd';
 import { enquireScreen, unenquireScreen } from 'enquire-js'
 import { useDispatch, useSelector } from 'react-redux'
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { pathToRegexp } from 'path-to-regexp'
 import { config } from '@/configs'
+import { queryAncestors } from '@/utils'
+import MenuIcon from '@/components/MenuIcon'
 import styles from './PrimaryLayout.module.less'
 import { GlobalState } from '@/store';
 import NotFoundPage from '../pages/404';
@@ -63,6 +67,37 @@ function PrimaryLayout() {
   // mpid is equal to -1 is not a available menu.
   const menus = routeList.filter(_ => _.mpid !== -1)
 
+  // Find the breadcrumb navigation of the current route match and all its ancestors.
+  const paths = currentRoute
+  ? queryAncestors(routeList, currentRoute, 'bpid').reverse()
+  : [
+    routeList[0],
+    {
+      id: 404,
+      name: 'Not Found',
+    },
+  ]
+
+  const generateBreadcrumbs = (paths = []) => {
+    return paths.filter(x => x).map((item, key) => {
+      const ItemIcon = MenuIcon[item.icon]
+      const content = (
+        <>
+          {item.icon && ItemIcon &&
+            <ItemIcon style={{ marginRight: 4 }} />}
+          {item.name}
+        </>
+      )
+
+      return (
+        <Breadcrumb.Item key={key}>
+          {paths.length - 1 !== key ?
+            <Link to={item.route || '#'}>{content}</Link> : content}
+        </Breadcrumb.Item>
+      )
+    })
+  }
+
   const headerProps = {
     user,
     menus,
@@ -77,6 +112,7 @@ function PrimaryLayout() {
     collapsed: settings.collapsed,
     onCollapseChange,
   }
+  
   return (
     <Layout>
       {settings.isMobile ? (
@@ -86,7 +122,7 @@ function PrimaryLayout() {
           onClose={() => onCollapseChange(!settings.collapsed)}
           open={!settings.collapsed}
           placement="left"
-          width={208}
+          width={228}
           rootStyle={{
             padding: 0,
             height: '100vh',
@@ -104,7 +140,9 @@ function PrimaryLayout() {
       >
         <Header {...headerProps} />
         <Content className={styles.content}>
-          <Bread routeList={routeList} />
+          <Breadcrumb className={styles.bread}>
+            {generateBreadcrumbs(paths)}
+          </Breadcrumb>
           {hasPermission ? <Outlet /> : <NotFoundPage />}
         </Content>
         <FloatButton.BackTop

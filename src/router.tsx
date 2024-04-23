@@ -1,10 +1,10 @@
 import React from 'react' // don't delete this line
 import { createBrowserRouter } from 'react-router-dom';
-import BaseLayout from './BaseLayout'
+import BaseLayout from './layouts/BaseLayout'
 
-import Login from '../pages/login';
-import User from '../pages/user';
-import NotFoundPage from '../pages/404';
+import Login from './pages/login';
+import User from './pages/user';
+import NotFoundPage from './pages/404';
 
 const routes = [
     {

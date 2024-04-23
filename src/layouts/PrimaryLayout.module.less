@@ -17,9 +17,20 @@
   }
 }
 
+.bread {
+  margin-bottom: 18px;
+
+  :global {
+    .ant-breadcrumb {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
 .content {
-    padding: 12px 20px 20px 20px;
-    min-height: ~'calc(100% - 72px)';
+  padding: 12px 20px 20px 20px;
+  min-height: ~'calc(100% - 72px)';
 }
 
 .container {
@@ -32,6 +43,10 @@
 }
 
 @media (max-width: 767px) {
+  .bread {
+    margin-bottom: 12px;
+  }
+
   .content {
     padding: 12px;
   }
