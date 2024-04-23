@@ -15,7 +15,7 @@ import { config } from '@/configs'
 const { SubMenu } = Menu
 const { Paragraph } = Typography;
 
-function Header({ onCollapseChange }) {
+function Header({ }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const settings = useSelector((state: GlobalState) => state.settings)
@@ -25,6 +25,15 @@ function Header({ onCollapseChange }) {
 
   const onFindallNotifications = () => {
     navigate(`/account/notification`)
+  }
+
+  const onCollapseChange = (collapsed: Boolean) => {
+    dispatch({
+      type: 'updateSetting',
+      payload: {
+          collapsed,
+      },
+    })
   }
 
   const onSignOut = () => {
@@ -71,7 +80,7 @@ function Header({ onCollapseChange }) {
               <List.Item className={styles.notificationItem}>
                 <List.Item.Meta onClick={() => onDealNotification(item)}
                   title={<Paragraph ellipsis={{ rows: 3 }}>{item.content}</Paragraph>}
-                  description={item.date || `周${COMMON.week[item.week]}`}
+                  description={item.date}
                 />
                 <Tag
                   closable

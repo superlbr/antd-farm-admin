@@ -18,7 +18,6 @@ function PrimaryLayout() {
   let enquireHandler: any
 
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const settings = useSelector((state: GlobalState) => state.settings)
   const routeList = useSelector((state: GlobalState) => state.routeList)
@@ -29,12 +28,9 @@ function PrimaryLayout() {
     enquireHandler = enquireScreen((mobile: boolean) => {
       if (settings.isMobile !== mobile) {
         dispatch({
-          type: 'updateState',
+          type: 'updateSetting',
           payload: {
-            key: 'settings',
-            params: {
-              isMobile: mobile,
-            }
+            isMobile: mobile,
           },
         })
       }
@@ -43,16 +39,13 @@ function PrimaryLayout() {
     return () => {
       unenquireScreen(enquireHandler)
     }
-  }, [])
+  }, [settings.isMobile])
 
   const onCollapseChange = (collapsed: Boolean) => {
     dispatch({
-      type: 'updateState',
+      type: 'updateSetting',
       payload: {
-        key: 'settings',
-        params: {
           collapsed,
-        }
       },
     })
   }
@@ -74,7 +67,6 @@ function PrimaryLayout() {
     user,
     menus,
     collapsed: settings.collapsed,
-    onCollapseChange,
     fixed: config.fixedHeader,
   }
 
@@ -86,47 +78,45 @@ function PrimaryLayout() {
     onCollapseChange,
   }
   return (
-    (<>
-      <Layout>
-        {settings.isMobile ? (
-          <Drawer
-            maskClosable
-            closable={false}
-            onClose={() => onCollapseChange(!settings.collapsed)}
-            open={!settings.collapsed}
-            placement="left"
-            width={208}
-            rootStyle={{
-              padding: 0,
-              height: '100vh',
-            }}
-          >
-            <Sider {...siderProps} />
-          </Drawer>
-        ) : (
-          <Sider {...siderProps} />
-        )}
-        <div
-          className={styles.container}
-          style={{ paddingTop: config.fixedHeader ? 72 : 0 }}
-          id="primaryLayout"
+    <Layout>
+      {settings.isMobile ? (
+        <Drawer
+          maskClosable
+          closable={false}
+          onClose={() => onCollapseChange(!settings.collapsed)}
+          open={!settings.collapsed}
+          placement="left"
+          width={208}
+          rootStyle={{
+            padding: 0,
+            height: '100vh',
+          }}
         >
-          <Header {...headerProps} />
-          <Content className={styles.content}>
-            <Bread routeList={routeList} />
-            {hasPermission ? <Outlet /> : <NotFoundPage />}
-          </Content>
-          <FloatButton.BackTop
-            className={styles.backTop}
-            target={() => document.querySelector('#primaryLayout') as HTMLElement}
-          />
-          <Footer
-            copyright={config.copyright}
-            links={config.links}
-          />
-        </div>
-      </Layout>
-    </>)
+          <Sider {...siderProps} />
+        </Drawer>
+      ) : (
+        <Sider {...siderProps} />
+      )}
+      <div
+        className={styles.container}
+        style={{ paddingTop: config.fixedHeader ? 72 : 0 }}
+        id="primaryLayout"
+      >
+        <Header {...headerProps} />
+        <Content className={styles.content}>
+          <Bread routeList={routeList} />
+          {hasPermission ? <Outlet /> : <NotFoundPage />}
+        </Content>
+        <FloatButton.BackTop
+          className={styles.backTop}
+          target={() => document.querySelector('#primaryLayout') as HTMLElement}
+        />
+        <Footer
+          copyright={config.copyright}
+          links={config.links}
+        />
+      </div>
+    </Layout>
   )
 }
 

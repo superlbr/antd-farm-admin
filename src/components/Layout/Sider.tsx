@@ -7,21 +7,27 @@ import SiderMenu from './Menu'
 import styles from './Sider.module.less'
 import { useDispatch } from 'react-redux'
 
-function Sider({ menus, theme, isMobile, collapsed, onCollapseChange }) {
+function Sider({ menus, theme, isMobile, collapsed }) {
   const dispatch = useDispatch()
 
-  const onThemeChange = (newTheme: string) => {
+  const onCollapseChange = (collapsed: Boolean) => {
     dispatch({
-      type: 'updateState',
+      type: 'updateSetting',
       payload: {
-        key: 'settings',
-        params: {
-          theme: newTheme,
-        }
+        collapsed,
+      },
+    })
+  }
+
+  const onThemeChange = (theme: string) => {
+    dispatch({
+      type: 'updateSetting',
+      payload: {
+        theme
       },
     })
 
-    return newTheme
+    return theme
   }
 
   return (
@@ -32,7 +38,7 @@ function Sider({ menus, theme, isMobile, collapsed, onCollapseChange }) {
       trigger={null}
       collapsible
       collapsed={collapsed}
-      onBreakpoint={!isMobile ? onCollapseChange : () => { }}
+      onBreakpoint={!isMobile ? () => onCollapseChange() : () => {}}
       className={styles.sider}
     >
       <div className={styles.brand}>
@@ -53,7 +59,7 @@ function Sider({ menus, theme, isMobile, collapsed, onCollapseChange }) {
             theme={theme}
             collapsed={collapsed}
             isMobile={isMobile}
-            onCollapseChange={onCollapseChange}
+            onCollapseChange={() => onCollapseChange()}
           />
         </ScrollBar>
       </div>

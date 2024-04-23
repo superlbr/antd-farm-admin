@@ -40,15 +40,13 @@ const initialState: GlobalState = {
 
 function rootReducer(state = initialState, action: { type: string; payload: any; }) {
 	switch (action.type) {
-		case "updateState": {
-			const { key, params } = action.payload;
-
+		case "updateSetting": {
             return {
                 ...state,
-                [key]: {
-                    ...state[key],
-                    ...params
-                }
+				settings: {
+					...state.settings,
+					...action.payload
+				}
             };
 		}
 

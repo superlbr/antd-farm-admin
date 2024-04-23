@@ -7,13 +7,15 @@ import {
   arrayToTree,
   queryAncestors,
 } from '@/utils'
+import { useDispatch } from 'react-redux'
 
 const { SubMenu } = Menu
 
 // menuParentId = mpid
 // breadcrumbParentId = bpid
-function Menus({ menus = [], collapsed, isMobile, theme, onCollapseChange }) {
+function Menus({ menus = [], collapsed, isMobile, theme }) {
   const [openKeys, setOpenKeys] = useState([])
+  const dispatch = useDispatch()
 
   const onOpenChange = openKeys => {
     const rootSubmenuKeys = menus.filter(_ => !_.mpid).map(_ => _.id)
@@ -27,6 +29,15 @@ function Menus({ menus = [], collapsed, isMobile, theme, onCollapseChange }) {
       newOpenKeys = latestOpenKey ? [latestOpenKey] : []
     }
     setOpenKeys(newOpenKeys)
+  }
+
+  const onCollapseChange = (collapsed: Boolean) => {
+    dispatch({
+      type: 'updateSetting',
+      payload: {
+        collapsed,
+      },
+    })
   }
 
   const generateMenus = data => {
