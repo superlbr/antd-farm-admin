@@ -34,7 +34,7 @@ const initialState: GlobalState = {
 			icon: 'user',
 			name: '用户',
 			children: [{
-			  id: 2,
+			  id: 3,
 			  level: 2,
 			  name: '用户列表',
 			  router: '/user/list',
