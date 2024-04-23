@@ -1,5 +1,5 @@
 export const config = {
-  title: 'Antd Farm Admin',
+  siteName: 'Farm Admin',
   copyright: 'Antd Farm Admin  © 2024 ',
   apiPrefix: '/api/v1',
   fixedHeader: true, // sticky primary layout header

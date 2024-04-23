@@ -1,4 +1,4 @@
-/* @import '~antd/lib/style/themes/default.less'; */
+@import '@/themes/vars.less';
 
 .trendItem {
   display: inline-block;
@@ -16,11 +16,11 @@
     }
   }
   .up {
-    color: @red-6;
+    color: red;
   }
   .down {
     top: -1px;
-    color: @green-6;
+    color: green;
   }
 
   &.trendItemGrey .up,
@@ -29,9 +29,9 @@
   }
 
   &.reverseColor .up {
-    color: @green-6;
+    color: green;
   }
   &.reverseColor .down {
-    color: @red-6;
+    color: red;
   }
 }

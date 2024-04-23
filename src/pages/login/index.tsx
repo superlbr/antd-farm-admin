@@ -65,7 +65,7 @@ const Login: React.FC = () => {
               Sign in
             </Button>
             <p>
-              <span className="margin-right">
+              <span>
                 Username：guest
               </span>
               <span>

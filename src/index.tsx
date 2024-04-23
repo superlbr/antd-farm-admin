@@ -7,6 +7,7 @@ import { RouterProvider } from 'react-router-dom'
 import zhCN from 'antd/locale/zh_CN';
 import enUS from 'antd/locale/en_US';
 import store from './store';
+import { GlobalContext } from './context';
 import { router } from './router';
 import './index.css';
 import useStorage from './hooks/useStorage';
@@ -24,10 +25,17 @@ function Index() {
     }
   }
 
+  const contextValue = {
+    lang,
+    setLang,
+  };
+
   return <Provider store={store}>
-    <ConfigProvider locale={getLocale()}>
-      <RouterProvider router={router} />
-    </ConfigProvider>
+    <GlobalContext.Provider value={contextValue}>
+      <ConfigProvider locale={getLocale()}>
+        <RouterProvider router={router} />
+      </ConfigProvider>
+    </GlobalContext.Provider>
   </Provider>
 }
 
