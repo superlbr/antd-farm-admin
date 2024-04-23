@@ -42,14 +42,13 @@ function Menus({ menus = [], collapsed, isMobile, theme }) {
 
   const generateMenus = data => {
     return data.map(item => {
-      const ItemIcon = Icons[item.icon]
       if (item.children) {
         return (
           <SubMenu
             key={item.id}
             title={
               <>
-                {item.icon && ItemIcon && <ItemIcon />}
+                { item.icon && Icons(item.icon)}
                 <span>{item.name}</span>
               </>
             }
@@ -62,7 +61,7 @@ function Menus({ menus = [], collapsed, isMobile, theme }) {
       return (
         <Menu.Item key={item.id}>
           <NavLink to={item.route || '#'}>
-            {item.icon && ItemIcon && <ItemIcon />}
+            {item.icon && Icons(item.icon)}
             <span>{item.name}</span>
           </NavLink>
         </Menu.Item>

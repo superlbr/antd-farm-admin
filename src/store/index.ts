@@ -24,14 +24,14 @@ const initialState: GlobalState = {
 		{
 		  id: 1,
 		  level: 1,
-		  icon: 'laptop',
+		  icon: 'dashboard',
 		  name: '首页',
 		  router: '/dashboard/monitor',
 		},
 		{
 			id: 2,
 			level: 1,
-			icon: 'laptop',
+			icon: 'user',
 			name: '用户',
 			children: [{
 			  id: 2,

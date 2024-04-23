@@ -23,11 +23,11 @@ import {
   AreaChartOutlined,
 } from '@ant-design/icons'
 import React from 'react'
-export interface IMenuIcon {
+export interface IconType {
   [key: string]: React.ReactNode
 }
 
-const Icons: IMenuIcon = {
+const Icons: IconType = {
   'pay-circle-o': <PayCircleOutlined />,
   'shopping-cart': <ShoppingCartOutlined />,
   'camera-o': <CameraOutlined />,
@@ -43,4 +43,4 @@ const Icons: IMenuIcon = {
   edit: <EditOutlined />,
 }
 
-export default Icons
+export default (name: string) => Icons[name]
