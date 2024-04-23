@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import { BulbOutlined } from '@ant-design/icons'
 import { Switch, Layout } from 'antd'
 import ScrollBar from '../ScrollBar'
 import { config } from '@/configs'
 import SiderMenu from './Menu'
-import styles from './Sider.less'
+import styles from './Sider.module.less'
 import { useDispatch } from 'react-redux'
 
 function Sider({ menus, theme, isMobile, collapsed, onCollapseChange }) {
@@ -32,7 +32,7 @@ function Sider({ menus, theme, isMobile, collapsed, onCollapseChange }) {
       trigger={null}
       collapsible
       collapsed={collapsed}
-      onBreakpoint={!isMobile ? onCollapseChange : (broken) => { }}
+      onBreakpoint={!isMobile ? onCollapseChange : () => { }}
       className={styles.sider}
     >
       <div className={styles.brand}>

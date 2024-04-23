@@ -76,9 +76,6 @@ function PrimaryLayout() {
     collapsed: settings.collapsed,
     onCollapseChange,
     fixed: config.fixedHeader,
-    onFindallNotifications() {
-      navigate(`/account/notification`)
-    },
   }
 
   const siderProps = {

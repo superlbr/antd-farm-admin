@@ -1,3 +1,4 @@
+import React from 'react'
 import { queryLayout } from '@/utils'
 import { config } from '@/configs'
 import { Outlet } from 'react-router-dom'

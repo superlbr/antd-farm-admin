@@ -1,3 +1,4 @@
+import React from 'react' // don't forget to import React
 import { ConfigProvider } from 'antd'
 // @ts-ignore
 import { Outlet } from 'react-router-dom'

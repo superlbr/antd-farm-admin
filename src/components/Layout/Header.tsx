@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import {
   ArrowsAltOutlined, BellOutlined, MenuFoldOutlined, MenuUnfoldOutlined
 } from '@ant-design/icons'
@@ -15,17 +15,24 @@ import { config } from '@/configs'
 const { SubMenu } = Menu
 const { Paragraph } = Typography;
 
-function Header() {
+function Header( onCollapseChange: any ) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const settings = useSelector((state: GlobalState) => state.settings)
   const userInfo = useSelector((state: GlobalState) => state.userInfo)
   
+  const [notifications, onUpdateNotifications] = useState([])
+
+
+  const onFindallNotifications = () => {
+    navigate(`/account/notification`)
+  }
+
   const onSignOut = () => {
     dispatch({ type: 'app/logout' })
   }
   const onUserProfile = () => {
-    navigate(`/account/admin/${user!.uid}`)
+    navigate(`/account/admin/${userInfo.uid}`)
   }
 
   const handleClickMenu = (e: { key: string }) => {
@@ -116,9 +123,9 @@ function Header() {
     >
       <div
         className={styles.button}
-        onClick={onCollapseChange(!collapsed)}
+        onClick={onCollapseChange(!settings.collapsed)}
       >
-        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        { settings.collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </div>
       <div className={styles.rightContainer}>
         {rightContent}
