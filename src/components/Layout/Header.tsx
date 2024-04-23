@@ -7,10 +7,10 @@ import { COMMON } from '@/configs/constants'
 import classnames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import screenfull from 'screenfull'
-import styles from './Header.less'
+import styles from './Header.module.less'
 import { useNavigate } from 'react-router-dom'
 import { GlobalState } from '@/store'
-import { config } from 'process'
+import { config } from '@/configs'
 
 const { SubMenu } = Menu
 const { Paragraph } = Typography;

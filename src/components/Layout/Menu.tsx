@@ -1,5 +1,4 @@
-import React, { PureComponent, Fragment } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, Fragment } from 'react'
 import { Menu } from 'antd'
 import MenuIcon from '@/components/MenuIcon'
 import { pathToRegexp } from 'path-to-regexp'
@@ -8,36 +7,29 @@ import {
   arrayToTree,
   queryAncestors,
 } from '@/utils'
-import store from 'store'
 
 const { SubMenu } = Menu
 
 // menuParentId = mpid
 // breadcrumbParentId = bpid
-class Menus extends PureComponent {
-  state = {
-    openKeys: store.get('openKeys') || [],
-  }
+function Menus(menus = []) {
+  const [openKeys, setOpenKeys] = useState([])
 
-  onOpenChange = openKeys => {
-    const { menus=[] } = this.props
+  const onOpenChange = openKeys => {
     const rootSubmenuKeys = menus.filter(_ => !_.mpid).map(_ => _.id)
 
     const latestOpenKey = openKeys.find(
-      key => this.state.openKeys.indexOf(key) === -1
+      key => openKeys.indexOf(key) === -1
     )
 
     let newOpenKeys = openKeys
     if (rootSubmenuKeys.indexOf(latestOpenKey) !== -1) {
       newOpenKeys = latestOpenKey ? [latestOpenKey] : []
     }
-    this.setState({
-      openKeys: newOpenKeys,
-    })
-    store.set('openKeys', newOpenKeys)
+    setOpenKeys(newOpenKeys)
   }
 
-  generateMenus = data => {
+  const generateMenus = data => {
     return data.map(item => {
       const ItemIcon = MenuIcon[item.icon]
       if (item.children) {
@@ -45,13 +37,13 @@ class Menus extends PureComponent {
           <SubMenu
             key={item.id}
             title={
-              <Fragment>
-                {item.icon && ItemIcon && <ItemIcon /> }
+              <>
+                {item.icon && ItemIcon && <ItemIcon />}
                 <span>{item.name}</span>
-              </Fragment>
+              </>
             }
           >
-            {this.generateMenus(item.children)}
+            {generateMenus(item.children)}
           </SubMenu>
         )
       }
@@ -67,48 +59,39 @@ class Menus extends PureComponent {
     })
   }
 
-  render() {
-    const { collapsed, theme, menus, location, isMobile, onCollapseChange } = this.props
+  const { collapsed, theme, location, isMobile, onCollapseChange } = this.props
 
-    // Generating tree-structured data for menu content.
-    const menuTree = arrayToTree(menus, 'id', 'bpid')
+  // Generating tree-structured data for menu content.
+  const menuTree = arrayToTree(menus, 'id', 'bpid')
 
-    // Find a menu that matches the pathname.
-    const currentMenu = menus.find(
-      _ => _.route && pathToRegexp(_.route).exec(location.pathname)
-    )
+  // Find a menu that matches the pathname.
+  const currentMenu = menus.find(
+    _ => _.route && pathToRegexp(_.route).exec(location.pathname)
+  )
 
-    // Find the key that should be selected according to the current menu.
-    const selectedKeys = currentMenu
-      ? queryAncestors(menus, currentMenu, 'mpid').map(_ => `${_.id}`)
-      : []
-    
-    const menuProps = collapsed ? {} : { openKeys: this.state.openKeys }
-      
-    return (
-      <Menu
-        mode="inline"
-        theme={theme}
-        onOpenChange={this.onOpenChange}
-        selectedKeys={selectedKeys}
-        onClick={
-          isMobile ? () => {
-            onCollapseChange(true)
-          } : undefined
-        }
-        {...menuProps}
-      >
-        {this.generateMenus(menuTree)}
-      </Menu>
-    )
-  }
-}
+  // Find the key that should be selected according to the current menu.
+  const selectedKeys = currentMenu
+    ? queryAncestors(menus, currentMenu, 'mpid').map(_ => `${_.id}`)
+    : []
 
-Menus.propTypes = {
-  menus: PropTypes.array,
-  theme: PropTypes.string,
-  isMobile: PropTypes.bool,
-  onCollapseChange: PropTypes.func,
+  const menuProps = collapsed ? {} : { openKeys }
+
+  return (
+    <Menu
+      mode="inline"
+      theme={theme}
+      onOpenChange={onOpenChange}
+      selectedKeys={selectedKeys}
+      onClick={
+        isMobile ? () => {
+          onCollapseChange(true)
+        } : undefined
+      }
+      {...menuProps}
+    >
+      {generateMenus(menuTree)}
+    </Menu>
+  )
 }
 
 export default Menus
