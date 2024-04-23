@@ -12,7 +12,7 @@ const { SubMenu } = Menu
 
 // menuParentId = mpid
 // breadcrumbParentId = bpid
-function Menus(menus = []) {
+function Menus({ menus = [], collapsed, isMobile, theme, onCollapseChange }) {
   const [openKeys, setOpenKeys] = useState([])
 
   const onOpenChange = openKeys => {
@@ -59,8 +59,6 @@ function Menus(menus = []) {
     })
   }
 
-  const { collapsed, theme, location, isMobile, onCollapseChange } = this.props
-
   // Generating tree-structured data for menu content.
   const menuTree = arrayToTree(menus, 'id', 'bpid')
 
@@ -80,7 +78,7 @@ function Menus(menus = []) {
     <Menu
       mode="inline"
       theme={theme}
-      onOpenChange={onOpenChange}
+      onOpenChange={() => onOpenChange}
       selectedKeys={selectedKeys}
       onClick={
         isMobile ? () => {

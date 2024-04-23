@@ -6,7 +6,7 @@ import { pathToRegexp } from 'path-to-regexp'
 import { queryAncestors } from '@/utils'
 import styles from './Bread.less'
 
-function Bread() {
+function Bread({ routeList, location }) {
   const generateBreadcrumbs = (paths = []) => {
     return paths.filter(x => x).map((item, key) => {
       const ItemIcon = MenuIcon[item.icon]

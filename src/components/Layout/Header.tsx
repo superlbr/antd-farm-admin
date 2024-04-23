@@ -15,14 +15,13 @@ import { config } from '@/configs'
 const { SubMenu } = Menu
 const { Paragraph } = Typography;
 
-function Header( onCollapseChange: any ) {
+function Header({ onCollapseChange }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const settings = useSelector((state: GlobalState) => state.settings)
   const userInfo = useSelector((state: GlobalState) => state.userInfo)
   
   const [notifications, onUpdateNotifications] = useState([])
-
 
   const onFindallNotifications = () => {
     navigate(`/account/notification`)
@@ -123,7 +122,7 @@ function Header( onCollapseChange: any ) {
     >
       <div
         className={styles.button}
-        onClick={onCollapseChange(!settings.collapsed)}
+        onClick={() => onCollapseChange(!settings.collapsed)}
       >
         { settings.collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </div>

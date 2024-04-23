@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './index.module.less'
+import styles from './Footer.module.less'
 
 interface LinkItem {
   key: string
