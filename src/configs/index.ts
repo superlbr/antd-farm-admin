@@ -1,8 +1,6 @@
-import { IConfig } from '@/typings'
-
-export const config: IConfig = {
+export const config = {
   title: 'Antd Farm Admin',
-  copyright: 'Ant Design Admin  © 2024 superlbr',
+  copyright: 'Antd Farm Admin  © 2024 ',
   apiPrefix: '/api/v1',
   fixedHeader: true, // sticky primary layout header
 
