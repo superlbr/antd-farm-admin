@@ -3,7 +3,7 @@ import { Avatar, Button, Table } from 'antd'
 import DropOption from '@/components/DropOption';
 import { Link } from 'react-router-dom';
 import { useRequest } from '@/hooks'
-import { queryUserList } from '@/services'
+import { queryUserList, userUpdate, userRemove } from '@/services'
 import type {
   IUserItem,
   IUserListResult,
@@ -12,98 +12,6 @@ import type {
 import { ColumnType } from '@/typings'
 import './mock'
 import styles from './index.less'
-
-const handleMenuClick = (record, e) => {
-  if (e.key === '1') {
-    onEditItem(record)
-  } else if (e.key === '2') {
-    onStatusItem({ id: record.id, status: record.status })
-  } else if (e.key === '3') {
-    confirm({
-      title: '确认要删除该记录吗？?',
-      onOk() {
-        onDeleteItem(record.id)
-      },
-    })
-  }
-}
-
-const columns: ColumnType<IUserItem>[] = [
-  {
-    title: 'Avatar',
-    dataIndex: 'avatar',
-    key: 'avatar',
-    width: '7%',
-    fixed: 'left',
-    render: (text) => <Avatar style={{ marginLeft: 8 }} src={text} />,
-  },
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,
-  },
-  {
-    title: 'NickName',
-    dataIndex: 'nickName',
-    key: 'nickName',
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    width: '6%',
-    key: 'age',
-  },
-  {
-    title: 'Gender',
-    dataIndex: 'isMale',
-    key: 'isMale',
-    width: '7%',
-    render: (text) => <span>{text ? 'Male' : 'Female'}</span>,
-  },
-  {
-    title: 'Phone',
-    dataIndex: 'phone',
-    key: 'phone',
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-    ellipsis: true,
-    key: 'email',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    ellipsis: true,
-    key: 'address',
-  },
-  {
-    title: 'CreateTime',
-    dataIndex: 'createTime',
-    key: 'createTime',
-  },
-  {
-    title: 'Operation',
-    key: 'operation',
-    fixed: 'right',
-    width: '12%',
-    render: (text, record) => {
-      return (<DropOption
-        onMenuClick={e => handleMenuClick(record, e)}
-        menuOptions={[
-          {
-              key: record.status ? '1' : '3',
-              name: record.status ? '修改' : '删除',
-          }, {
-              key: '2',
-              name: record.status ? '禁用' : '启用',
-          }
-        ]}
-      />)
-    },
-  },
-]
 
 function UserPage() {
   const [current, setCurrent] = useState<number>(1)
@@ -127,6 +35,98 @@ function UserPage() {
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current, pageSize])
+
+  const handleMenuClick = (record, e) => {
+    if (e.key === '1') {
+      useRequest(userUpdate, {
+        id: record.id,
+      })
+    } else if (e.key === '3') {
+      confirm({
+        title: '确认要删除该记录吗？?',
+        onOk() {
+          onDeleteItem(record.id)
+        },
+      })
+    }
+  }
+
+  const columns: ColumnType<IUserItem>[] = [
+    {
+      title: 'Avatar',
+      dataIndex: 'avatar',
+      key: 'avatar',
+      width: '7%',
+      fixed: 'left',
+      render: (text) => <Avatar style={{ marginLeft: 8 }} src={text} />,
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,
+    },
+    {
+      title: 'NickName',
+      dataIndex: 'nickName',
+      key: 'nickName',
+    },
+    {
+      title: 'Age',
+      dataIndex: 'age',
+      width: '6%',
+      key: 'age',
+    },
+    {
+      title: 'Gender',
+      dataIndex: 'isMale',
+      key: 'isMale',
+      width: '7%',
+      render: (text) => <span>{text ? 'Male' : 'Female'}</span>,
+    },
+    {
+      title: 'Phone',
+      dataIndex: 'phone',
+      key: 'phone',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      ellipsis: true,
+      key: 'email',
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+      ellipsis: true,
+      key: 'address',
+    },
+    {
+      title: 'CreateTime',
+      dataIndex: 'createTime',
+      key: 'createTime',
+    },
+    {
+      title: 'Operation',
+      key: 'operation',
+      fixed: 'right',
+      width: '12%',
+      render: (text, record) => {
+        return (<DropOption
+          onMenuClick={e => handleMenuClick(record, e)}
+          menuOptions={[
+            {
+              key: '1',
+              name: '修改',
+            }, {
+              key: '3',
+              name: '删除',
+            }
+          ]}
+        />)
+      },
+    },
+  ]
 
   const pagination = {
     current,

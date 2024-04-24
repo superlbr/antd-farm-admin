@@ -1,13 +1,13 @@
 /* global window */
 /* global document */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Header, Sider, Footer } from '@/components/Layout'
-import { 
+import {
   Breadcrumb, Drawer, FloatButton, Layout
 } from 'antd';
 import { enquireScreen, unenquireScreen } from 'enquire-js'
 import { useDispatch, useSelector } from 'react-redux'
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useLocation } from 'react-router-dom';
 import { pathToRegexp } from 'path-to-regexp'
 import { config } from '@/configs'
 import { queryAncestors } from '@/utils'
@@ -22,11 +22,15 @@ function DefaultLayout() {
   let enquireHandler: any
 
   const dispatch = useDispatch()
+  const location = useLocation()
 
   const settings = useSelector((state: GlobalState) => state.settings)
   const routeList = useSelector((state: GlobalState) => state.routeList)
   const permissions = useSelector((state: GlobalState) => state.permissions)
   const user = useSelector((state: GlobalState) => state.userInfo)
+
+  const [hasPermission, setHasPermission] = useState(false)
+  const [breadList, setBreadList] = useState([])
 
   useEffect(() => {
     enquireHandler = enquireScreen((mobile: boolean) => {
@@ -43,49 +47,50 @@ function DefaultLayout() {
     return () => {
       unenquireScreen(enquireHandler)
     }
-  }, [settings.isMobile])
+  }, [])
 
   const onCollapseChange = (collapsed: Boolean) => {
     dispatch({
       type: 'updateSetting',
       payload: {
-          collapsed,
+        collapsed,
       },
     })
   }
-
-  // Find a route that matches the pathname.
-  const currentRoute = routeList.find(
-    _ => _.route && pathToRegexp(_.route).exec(location.pathname)
-  )
-
-  // Query whether you have permission to enter this page
-  const hasPermission = currentRoute
-    ? permissions.includes(currentRoute.id)
-    : false
 
   // mpid is equal to -1 is not a available menu.
   const menus = routeList.filter(_ => _.mpid !== -1)
 
   // Find the breadcrumb navigation of the current route match and all its ancestors.
-  const paths = currentRoute
-  ? queryAncestors(routeList, currentRoute, 'bpid').reverse()
-  : [
-    routeList[0],
-    {
-      id: 404,
-      name: 'Not Found',
-    },
-  ]
+  useEffect(() => {
+    // Find a route that matches the pathname.
+    const currentRoute = routeList.find(
+      _ => _.route && pathToRegexp(_.route).exec(location.pathname)
+    )
+
+    // Query whether you have permission to enter this page
+    setHasPermission(currentRoute ? permissions.includes(currentRoute.id) : false)
+    const paths = currentRoute
+      ? queryAncestors(routeList, currentRoute, 'bpid').reverse()
+      : [
+        routeList[0],
+        {
+          id: 404,
+          name: 'Not Found',
+        },
+      ]
+    
+    const breadcrumbList = generateBreadcrumbs(paths)
+    setBreadList(breadcrumbList)
+  }, [location, routeList, permissions])
 
   const generateBreadcrumbs = (paths = []) => {
     return paths.filter(x => x).map((item, key) => {
-      const ItemIcon = Icons[item.icon]
       const content = (
         <>
-          {item.icon && ItemIcon &&
-            <ItemIcon style={{ marginRight: 4 }} />}
-          {item.name}
+          {item.icon &&
+            Icons(item.icon)}
+          <span style={{ marginLeft: 4 }}>{item.name}</span>
         </>
       )
 
@@ -112,7 +117,7 @@ function DefaultLayout() {
     collapsed: settings.collapsed,
     onCollapseChange,
   }
-  
+
   return (
     <Layout>
       {settings.isMobile ? (
@@ -141,7 +146,7 @@ function DefaultLayout() {
         <Header {...headerProps} />
         <Content className={styles.content}>
           <Breadcrumb className={styles.bread}>
-            {generateBreadcrumbs(paths)}
+            {breadList}
           </Breadcrumb>
           {hasPermission ? <Outlet /> : <NotFoundPage />}
         </Content>

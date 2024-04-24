@@ -1,79 +1,72 @@
 import React from 'react'
 import { Button, Row, Input, Form } from 'antd'
-import { GithubOutlined } from '@ant-design/icons'
 import { config } from '@/configs'
 import { useRequest } from '@/hooks'
 import { loginUser, ILoginUserParams } from '@/services'
 
 import styles from './index.module.less'
 import logoUrl from '@/assets/logo.svg?inline'
+import { useDispatch } from 'react-redux'
 
 const FormItem = Form.Item
 
-const footerLinks = [
-  {
-    key: 'github',
-    title: <GithubOutlined />,
-    href: 'https://github.com/zuiidea/antd-admin',
-    blankTarget: true,
-  },
-]
-
-const Login: React.FC = () => {
+const Login = () => {
+  const dispatch = useDispatch()
   const { run: runLogin, loading } = useRequest(loginUser, {
     manual: true,
   })
 
   const handleFinish = (values: ILoginUserParams) => {
     runLogin(values).then(() => {
-      console.log(values)
+      dispatch({
+        type: 'login',
+        payload: values,
+      })
       window.location.replace('/user')
     })
   }
 
   return (
-    <>
-      <div className={styles.form}>
-        <div className={styles.logo}>
-          <img alt="logo" src={logoUrl} />
-          <span>{config.title}</span>
-        </div>
-        <Form onFinish={handleFinish}>
-          <FormItem
-            name="username"
-            rules={[{ required: true, message: 'Please input your username!' }]}
-            hasFeedback
-          >
-            <Input placeholder={`Username`} />
-          </FormItem>
-          <FormItem
-            name="password"
-            rules={[{ required: true, message: 'Please input your password!' }]}
-            hasFeedback
-          >
-            <Input.Password placeholder={`Password`} />
-          </FormItem>
-          <Row>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={loading}
-              disabled={loading}
-            >
-              Sign in
-            </Button>
-            <p>
-              <span>
-                Username：guest
-              </span>
-              <span>
-                Password：guest
-              </span>
-            </p>
-          </Row>
-        </Form>
+    <div className={styles.form}>
+      <div className={styles.logo}>
+        <img alt="logo" src={logoUrl} />
+        <span>{config.siteName}</span>
       </div>
-    </>
+      <Form onFinish={handleFinish}>
+        <FormItem
+          name="username"
+          rules={[{ required: true, message: 'Please input your username!' }]}
+          hasFeedback
+        >
+          <Input placeholder={`Username`} />
+        </FormItem>
+        <FormItem
+          name="password"
+          rules={[{ required: true, message: 'Please input your password!' }]}
+          hasFeedback
+        >
+          <Input.Password placeholder={`Password`} />
+        </FormItem>
+        <Row>
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={loading}
+            disabled={loading}
+          >
+            Sign in
+          </Button>
+          <p>
+            <span>
+              Username：guest
+            </span>
+            <span>
+              Password：guest
+            </span>
+          </p>
+        </Row>
+      </Form>
+    </div>
   )
 }
 

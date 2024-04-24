@@ -56,6 +56,15 @@ function rootReducer(state = initialState, action: { type: string; payload: any;
             };
 		}
 
+		case "login": {
+			return {
+				...state,
+				userInfo: {
+					...action.payload
+				}
+			}
+		}
+
 		default:
 			return state;
 	}
