@@ -9,7 +9,7 @@ export interface GlobalState {
 		route_default?: string;
 	};
 	routeList: Record<string, any>[];
-    permissions: string[];
+    permissions: number[];
 }
 
 const initialState: GlobalState = {
@@ -26,7 +26,7 @@ const initialState: GlobalState = {
 		  level: 1,
 		  icon: 'dashboard',
 		  name: '首页',
-		  router: '/dashboard/monitor',
+		  route: '/dashboard',
 		},
 		{
 			id: 2,
@@ -37,11 +37,11 @@ const initialState: GlobalState = {
 			  id: 3,
 			  level: 2,
 			  name: '用户列表',
-			  router: '/user/list',
+			  route: '/user',
 			}]
 		  },
 	  ],
-    permissions: [],
+    permissions: [1, 2, 3],
 };
 
 function rootReducer(state = initialState, action: { type: string; payload: any; }) {

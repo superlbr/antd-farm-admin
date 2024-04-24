@@ -1,3 +1,4 @@
+import React from 'react';
 import { Row, Col, Tooltip } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
 
