@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Avatar, Button, Table } from 'antd'
+import DropOption from '@/components/DropOption';
 import { Link } from 'react-router-dom';
 import { useRequest } from '@/hooks'
 import { queryUserList } from '@/services'
@@ -11,6 +12,21 @@ import type {
 import { ColumnType } from '@/typings'
 import './mock'
 import styles from './index.less'
+
+const handleMenuClick = (record, e) => {
+  if (e.key === '1') {
+    onEditItem(record)
+  } else if (e.key === '2') {
+    onStatusItem({ id: record.id, status: record.status })
+  } else if (e.key === '3') {
+    confirm({
+      title: '确认要删除该记录吗？?',
+      onOk() {
+        onDeleteItem(record.id)
+      },
+    })
+  }
+}
 
 const columns: ColumnType<IUserItem>[] = [
   {
@@ -73,12 +89,18 @@ const columns: ColumnType<IUserItem>[] = [
     fixed: 'right',
     width: '12%',
     render: (text, record) => {
-      return (
-        <>
-          <Button type="link">Update</Button>
-          <Button type="link">Delete</Button>
-        </>
-      )
+      return (<DropOption
+        onMenuClick={e => handleMenuClick(record, e)}
+        menuOptions={[
+          {
+              key: record.status ? '1' : '3',
+              name: record.status ? '修改' : '删除',
+          }, {
+              key: '2',
+              name: record.status ? '禁用' : '启用',
+          }
+        ]}
+      />)
     },
   },
 ]

@@ -68,3 +68,7 @@ export const queryUserList = createService<
   IUserListResult,
   IQueryUserListParams
 >(user.queryUserList)
+
+export const userUpdateInfo = createService(user.updateUser)
+
+export const userRemove = createService(user.removeUser)

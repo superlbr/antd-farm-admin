@@ -17,9 +17,9 @@ export default {
   loginUser: 'POST /user/login',
   queryUser: '/user/:id',
   queryUserList: '/users',
-  updateUser: 'Patch /user/:id',
+  updateUser: 'POST /user/update/:id',
   createUser: 'POST /user',
-  removeUser: 'DELETE /user/:id',
+  removeUser: 'POST /user/delete/:id',
   removeUserList: 'POST /users/delete',
 } as TUserAPI
 

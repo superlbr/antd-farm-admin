@@ -91,9 +91,9 @@ function Menus({ menus = [], collapsed, isMobile, theme }) {
       onOpenChange={() => onOpenChange}
       selectedKeys={selectedKeys}
       onClick={
-        isMobile ? () => {
-          onCollapseChange(true)
-        } : undefined
+        () => {
+          isMobile && onCollapseChange(true)
+        }
       }
       {...menuProps}
     >
