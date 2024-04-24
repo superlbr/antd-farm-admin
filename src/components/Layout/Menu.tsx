@@ -72,7 +72,7 @@ function Menus({ menus = [], collapsed, isMobile, theme }) {
   // Generating tree-structured data for menu content.
   const menuTree = arrayToTree(menus, 'id', 'bpid')
 
-  // Find a menu that matches the pathname.
+  // Find a menu that matches the pathname
   const currentMenu = menus.find(
     _ => _.route && pathToRegexp(_.route).exec(location.pathname)
   )
@@ -91,7 +91,7 @@ function Menus({ menus = [], collapsed, isMobile, theme }) {
       onOpenChange={() => onOpenChange}
       selectedKeys={selectedKeys}
       onClick={
-        () => {
+        (e) => {
           isMobile && onCollapseChange(true)
         }
       }
