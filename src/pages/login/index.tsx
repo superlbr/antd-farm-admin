@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Row, Input, Form } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
 import { config } from '@/configs'
-import { useRequest, useConfig } from '@/hooks'
+import { useRequest } from '@/hooks'
 import { loginUser, ILoginUserParams } from '@/services'
 
 import styles from './index.module.less'
@@ -24,11 +24,9 @@ const Login: React.FC = () => {
     manual: true,
   })
 
-  const { queryUserInfo } = useConfig()
-
   const handleFinish = (values: ILoginUserParams) => {
     runLogin(values).then(() => {
-      queryUserInfo()
+      console.log(values)
       window.location.replace('/user')
     })
   }

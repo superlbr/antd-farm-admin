@@ -41,7 +41,10 @@ function Header({ }) {
   }
 
   const onSignOut = () => {
-    dispatch({ type: 'app/logout' })
+    dispatch({
+      type: 'signOut',
+    })
+    navigate('/login')
   }
   const onUserProfile = () => {
     navigate(`/account/admin/${userInfo.uid}`)

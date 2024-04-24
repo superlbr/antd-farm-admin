@@ -9,7 +9,7 @@ import enUS from 'antd/locale/en_US';
 import store from './store';
 import { GlobalContext } from './context';
 import { router } from './router';
-import './index.css';
+import './index.less';
 import useStorage from './hooks/useStorage';
 
 function Index() {

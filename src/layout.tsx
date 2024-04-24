@@ -7,18 +7,18 @@ import {
 } from 'antd';
 import { enquireScreen, unenquireScreen } from 'enquire-js'
 import { useDispatch, useSelector } from 'react-redux'
-import { Outlet, Link, useNavigate } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import { pathToRegexp } from 'path-to-regexp'
 import { config } from '@/configs'
 import { queryAncestors } from '@/utils'
 import Icons from '@/components/Icons'
-import styles from './PrimaryLayout.module.less'
+import styles from './layout.module.less'
 import { GlobalState } from '@/store';
-import NotFoundPage from '../pages/404';
+import NotFoundPage from './pages/404';
 
 const { Content } = Layout
 
-function PrimaryLayout() {
+function DefaultLayout() {
   let enquireHandler: any
 
   const dispatch = useDispatch()
@@ -158,4 +158,4 @@ function PrimaryLayout() {
   )
 }
 
-export default PrimaryLayout
+export default DefaultLayout
