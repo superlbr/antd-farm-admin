@@ -2,18 +2,17 @@ import React, { useState } from 'react'
 import { Menu } from 'antd'
 import Icons from '@/components/Icons'
 import { pathToRegexp } from 'path-to-regexp'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import {
   arrayToTree,
   queryAncestors,
 } from '@/utils'
 import { useDispatch } from 'react-redux'
 
-const { SubMenu } = Menu
-
 function Menus({ menus = [], collapsed, isMobile, theme }) {
   const [openKeys, setOpenKeys] = useState([])
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const onOpenChange = openKeys => {
     const rootSubmenuKeys = menus.filter(_ => !_.mpid).map(_ => _.id)
@@ -40,30 +39,12 @@ function Menus({ menus = [], collapsed, isMobile, theme }) {
 
   const generateMenus = data => {
     return data.map(item => {
-      if (item.children) {
-        return (
-          <SubMenu
-            key={item.id}
-            title={
-              <>
-                { item.icon && Icons(item.icon)}
-                <span>{item.name}</span>
-              </>
-            }
-          >
-            {generateMenus(item.children)}
-          </SubMenu>
-        )
+      return {
+        key: item.id,
+        icon: item.icon && Icons(item.icon),
+        label: item.name,
+        children: !item.route && item.children ? generateMenus(item.children) : null,
       }
-
-      return (
-        <Menu.Item key={item.id}>
-          <NavLink to={item.route || '#'}>
-            {item.icon && Icons(item.icon)}
-            <span>{item.name}</span>
-          </NavLink>
-        </Menu.Item>
-      )
     })
   }
 
@@ -93,10 +74,20 @@ function Menus({ menus = [], collapsed, isMobile, theme }) {
           isMobile && onCollapseChange(true)
         }
       }
+      onSelect={
+        (e) => {
+          const currentMenu = menus.find(_ => _.id == e.key)
+          if (currentMenu.route) {
+            navigate(currentMenu.route)
+            setOpenKeys([e.key])
+          } else {
+            setOpenKeys(openKeys => openKeys.includes(e.key) ? [] : [e.key])
+          }
+        }
+      }
+      items={ generateMenus(menuTree) }
       {...menuProps}
-    >
-      {generateMenus(menuTree)}
-    </Menu>
+    />
   )
 }
 
