@@ -9,51 +9,53 @@ export interface GlobalState {
 		route_default?: string;
 	};
 	routeList: Record<string, any>[];
-    permissions: number[];
+	permissions: number[];
 }
 
 const initialState: GlobalState = {
 	settings: {
 		isMobile: false,
-        theme: "light",
+		theme: "light",
 		collapsed: false,
-    },
+	},
 	userInfo: {
 	},
 	routeList: [
 		{
-		  id: 1,
-		  level: 1,
-		  icon: 'dashboard',
-		  name: '首页',
-		  route: '/dashboard',
+			id: 1,
+			level: 1,
+			icon: 'dashboard',
+			name: '首页',
+			route: '/dashboard',
 		},
 		{
 			id: 2,
 			level: 1,
 			icon: 'user',
 			name: '用户',
-			children: [{
-			  id: 3,
-			  level: 2,
-			  name: '用户列表',
-			  route: '/user',
-			}]
-		  },
-	  ],
-    permissions: [1, 2, 3],
+		},
+		{
+			id: 3,
+			bpid: 2, // parent id
+			mpid: 2, // determine whether menu rendered
+			level: 2,
+			name: '用户列表',
+			route: '/user',
+		}
+	],
+	permissions: [1, 2, 3],
 };
 
 function rootReducer(state = initialState, action: { type: string; payload: any; }) {
 	switch (action.type) {
 		case "updateSetting": {
-            return {
-                ...state,
+			return {
+				...state,
 				settings: {
 					...state.settings,
 					...action.payload
 				}
-            };
+			};
 		}
 
 		case "login": {

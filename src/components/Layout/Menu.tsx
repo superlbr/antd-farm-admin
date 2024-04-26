@@ -11,8 +11,6 @@ import { useDispatch } from 'react-redux'
 
 const { SubMenu } = Menu
 
-// menuParentId = mpid
-// breadcrumbParentId = bpid
 function Menus({ menus = [], collapsed, isMobile, theme }) {
   const [openKeys, setOpenKeys] = useState([])
   const dispatch = useDispatch()
