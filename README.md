@@ -1,6 +1,6 @@
 # Farm + React
 
-This template should help you start developing using React and TypeScript in [Farm](git@github.com:farm-fe/farm.git).
+This template should help you start developing using React and TypeScript in [Farm](https://github.com:farm-fe/farm.git) .
 
 Farm is fast vite-compatible build tool written in Rust
 
