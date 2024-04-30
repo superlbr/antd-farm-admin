@@ -67,7 +67,7 @@ function Menus({ menus = [], collapsed, isMobile, theme }) {
     <Menu
       mode="inline"
       theme={theme}
-      onOpenChange={() => onOpenChange}
+      onOpenChange={onOpenChange}
       selectedKeys={selectedKeys}
       onClick={
         (e) => {
