@@ -1,7 +1,7 @@
 import setupMock from "@/utils/setupMock";
 import Mock from "mockjs";
 
-const usersList = Mock.mock({
+let usersList = Mock.mock({
 	"data|4-6": [
 		{
 			"id|+1": 1,
@@ -38,6 +38,14 @@ setupMock({
 					break;
 				}
 			}
+
+			return true;
+		});
+
+		Mock.mock(new RegExp("/api/v1/user/delete"), (options) => {
+			const id = options.url.split('/').pop();
+
+			usersList.data = usersList.data.filter(item => item.id != id);
 
 			return true;
 		});
