@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider, useSelector } from 'react-redux'
 import { ConfigProvider } from 'antd'
@@ -24,6 +24,15 @@ function Index() {
         return zhCN;
     }
   }
+
+  // 检查登录状态
+  useEffect(() => {
+    if (localStorage.getItem('userStatus') === 'login') {
+      // fetchUserInfo();
+    } else if (window.location.pathname.replace(/\//g, '') !== 'login') {
+      window.location.pathname = '/login';
+    }
+  }, [])
 
   const contextValue = {
     lang,

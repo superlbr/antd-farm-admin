@@ -59,11 +59,20 @@ function rootReducer(state = initialState, action: { type: string; payload: any;
 		}
 
 		case "login": {
+			localStorage.setItem('userStatus', 'login')
 			return {
 				...state,
 				userInfo: {
 					...action.payload
 				}
+			}
+		}
+
+		case "logout": {
+			localStorage.setItem('userStatus', 'logout')
+			return {
+				...state,
+				userInfo: {}
 			}
 		}
 

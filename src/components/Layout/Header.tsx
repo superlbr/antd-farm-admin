@@ -42,7 +42,7 @@ function Header({ }) {
 
   const onSignOut = () => {
     dispatch({
-      type: 'signOut',
+      type: 'logout',
     })
     navigate('/login')
   }
