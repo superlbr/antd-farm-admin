@@ -34,7 +34,6 @@ setupMock({
 			for (let i = 0; i < usersList.data.length; i++) {
 				if (usersList.data[i].id == id) {
 					usersList.data[i] = { ...usersList.data[i], ...body };
-					console.log(usersList.data[i]);
 					break;
 				}
 			}

@@ -62,7 +62,6 @@ function Sider({ menus }) {
             theme={settings.theme}
             collapsed={settings.collapsed}
             isMobile={settings.isMobile}
-            onCollapseChange={() => onCollapseChange(settings.collapsed)}
           />
         </ScrollBar>
       </div>

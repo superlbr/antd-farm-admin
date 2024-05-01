@@ -1,15 +1,20 @@
 import React from 'react'
 import { BarsOutlined, DownOutlined } from '@ant-design/icons'
-import { Dropdown, Button, Menu } from 'antd'
-
-const { Item } = Menu
+import { Dropdown, Button } from 'antd'
+import type { MenuProps } from 'antd'
 
 const DropOption = ({
   onMenuClick, menuOptions, buttonStyle, dropdownProps, menuText,
 }) => {
-  const menu = menuOptions.map(item => <Item key={item.key}>{item.name}</Item>)
+  const items: MenuProps['items'] = menuOptions.map(item => { return {
+    label: item.name, key: item.key 
+  }})
+
   return (<Dropdown
-    overlay={<Menu onClick={onMenuClick}>{menu}</Menu>}
+    menu = {{
+      items,
+      onClick: onMenuClick
+    }}
     {...dropdownProps}
   >
     <Button style={{ border: 'none', ...buttonStyle }}>

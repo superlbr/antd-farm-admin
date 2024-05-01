@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Menu } from 'antd'
 import Icons from '@/components/Icons'
 import { pathToRegexp } from 'path-to-regexp'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   arrayToTree,
   queryAncestors,
@@ -14,7 +14,7 @@ function Menus({ menus = [], collapsed, isMobile, theme }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const onOpenChange = openKeys => {
+  const onOpenChange = (openKeys: any[]) => {
     const rootSubmenuKeys = menus.filter(_ => !_.mpid).map(_ => _.id)
 
     const latestOpenKey = openKeys.find(

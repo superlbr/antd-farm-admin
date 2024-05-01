@@ -12,4 +12,18 @@ export const config = {
       exlude: [/\/login/],
     },
   ],
+  links: [
+    {
+      key: 1,
+      title: 'Antd',
+      href: 'https://ant.design',
+      blankTarget: true,
+    },
+    {
+      key: 2,
+      title: 'Farm',
+      href: 'https://www.farmfe.org',
+      blankTarget: true,
+    },
+  ]
 }

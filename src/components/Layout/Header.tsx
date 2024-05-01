@@ -82,7 +82,7 @@ function Header({ }) {
       }}
       mode="horizontal"
     >
-      <SubMenu title={lang}>
+      <SubMenu key="langList" title={lang}>
         <Menu.Item key='zh-CN'>
           中文
         </Menu.Item>
