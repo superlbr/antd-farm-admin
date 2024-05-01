@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   ArrowsAltOutlined, BellOutlined, MenuFoldOutlined, MenuUnfoldOutlined
 } from '@ant-design/icons'
@@ -15,16 +15,21 @@ import { GlobalState } from '@/store'
 import { config } from '@/configs'
 import { COMMON } from '@/configs/constants'
 import defaultAvatar from '@/assets/avatar.jpg'
+import useLocale from '@/utils/useLocale'
+import { GlobalContext } from '@/context'
 
 const { SubMenu } = Menu
 const { Paragraph } = Typography;
 
 function Header({ }) {
+  const t = useLocale()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  
   const settings = useSelector((state: GlobalState) => state.settings)
   const userInfo = useSelector((state: GlobalState) => state.userInfo)
-  
+
+  const { setLang, lang } = useContext(GlobalContext)
   const [notifications, onUpdateNotifications] = useState([])
 
   const onFindallNotifications = () => {
@@ -69,6 +74,23 @@ function Header({ }) {
     <div key="fullscreen" className={styles.button}>
       <ArrowsAltOutlined onClick={onScreenFull} />
     </div>,
+    <Menu
+      key="language"
+      selectedKeys={[lang]}
+      onClick={data => {
+        setLang(data.key)
+      }}
+      mode="horizontal"
+    >
+      <SubMenu title={lang}>
+        <Menu.Item key='zh-CN'>
+          中文
+        </Menu.Item>
+        <Menu.Item key='en-US'>
+          English
+        </Menu.Item>
+      </SubMenu>
+    </Menu>,
     <Popover
       placement="bottomRight"
       trigger="click"
@@ -118,7 +140,7 @@ function Header({ }) {
         title={
           <>
             <Avatar style={{ marginRight: 12 }} src={userInfo.avatar ? userInfo.avatar : defaultAvatar } />
-            <span>{ userInfo.name || '用户' }</span>
+            <span>{ userInfo.name || t['header.user'] }</span>
           </>
         }
       >
