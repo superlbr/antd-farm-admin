@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Avatar, Button, Table } from 'antd'
+import { Avatar, Modal, Button, Table } from 'antd'
 import DropOption from '@/components/DropOption';
 import { Link } from 'react-router-dom';
 import { useRequest } from '@/hooks'
@@ -12,6 +12,8 @@ import type {
 import { ColumnType } from '@/typings'
 import './mock'
 import styles from './index.less'
+
+const { confirm } = Modal
 
 function UserPage() {
   const [current, setCurrent] = useState<number>(1)
@@ -36,11 +38,32 @@ function UserPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current, pageSize])
 
+  const updateUser = (values: any) => {
+    userUpdate({
+      ...values,
+      name: 'MockUser',
+    }).then(() => {
+      runQueryUserList({
+        page: current,
+        pageSize,
+      })
+    })
+  }
+
+  const onDeleteItem = (id: string) => {
+    userRemove({
+      id,
+    }).then(() => {
+      runQueryUserList({
+        page: current,
+        pageSize,
+      })
+    })
+  }
+
   const handleMenuClick = (record, e) => {
     if (e.key === '1') {
-      useRequest(userUpdate, {
-        id: record.id,
-      })
+      updateUser(record)
     } else if (e.key === '3') {
       confirm({
         title: '确认要删除该记录吗？?',
@@ -64,7 +87,7 @@ function UserPage() {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,
+      render: (text, record) => <Link to={`/user/info/${record.id}`}>{text}</Link>,
     },
     {
       title: 'NickName',
