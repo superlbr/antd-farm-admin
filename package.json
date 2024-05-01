@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.6",
+    "@loadable/component": "^5.16.4",
     "antd": "^5.16.5",
     "axios": "^1.6.8",
     "classnames": "^2.5.1",
