@@ -94,12 +94,10 @@ function DefaultLayout() {
         </>
       )
 
-      return (
-        <Breadcrumb.Item key={key}>
-          {paths.length - 1 !== key ?
-            <Link to={item.route || '#'}>{content}</Link> : content}
-        </Breadcrumb.Item>
-      )
+      return {
+        href: paths.length - 1 !== key ? (item.route || '') : '',
+        title: content
+      }
     })
   }
 
@@ -145,9 +143,7 @@ function DefaultLayout() {
       >
         <Header {...headerProps} />
         <Content className={styles.content}>
-          <Breadcrumb className={styles.bread}>
-            {breadList}
-          </Breadcrumb>
+          <Breadcrumb className={styles.bread} items={breadList} />
           {hasPermission ? <Outlet /> : <NotFoundPage />}
         </Content>
         <FloatButton.BackTop

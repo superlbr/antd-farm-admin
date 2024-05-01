@@ -9,8 +9,8 @@ import {
 } from '@/utils'
 import { useDispatch } from 'react-redux'
 
-function Menus({ menus = [], collapsed, isMobile, theme }) {
-  const [openKeys, setOpenKeys] = useState([])
+function Menus({ menus, collapsed, isMobile, theme }) {
+  const [openKeys, setOpenKeys] = useState([] as string[])
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -81,7 +81,7 @@ function Menus({ menus = [], collapsed, isMobile, theme }) {
             navigate(currentMenu.route)
             setOpenKeys([e.key])
           } else {
-            setOpenKeys(openKeys => openKeys.includes(e.key) ? [] : [e.key])
+            setOpenKeys(openKeys.includes(e.key) ? [] : [e.key])
           }
         }
       }
