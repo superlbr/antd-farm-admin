@@ -18,6 +18,7 @@ const Login = () => {
 
   const handleFinish = (values: ILoginUserParams) => {
     runLogin(values).then(() => {
+      values.name = "David"
       dispatch({
         type: 'login',
         payload: values,
