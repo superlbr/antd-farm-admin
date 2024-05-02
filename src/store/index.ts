@@ -19,6 +19,8 @@ const initialState: GlobalState = {
 		collapsed: false,
 	},
 	userInfo: {
+		uid: 0,
+		name: 'Guest',
 	},
 	routeList: [
 		{

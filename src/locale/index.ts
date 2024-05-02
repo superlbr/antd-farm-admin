@@ -2,12 +2,14 @@ const i18n = {
 	"en-US": {
 		"menu.welcome": "Welcome",
 		"menu.dashboard": "Dashboard",
-        "header.user": "User",
+        "column.avatar": "Avatar",
+        "column.name": "Name",
     },
     "zh-CN": {
         "menu.welcome": "欢迎",
         "menu.dashboard": "仪表盘",
-        "header.user": "用户",
+        "column.avatar": "头像",
+        "column.name": "姓名",
     }
 };
 

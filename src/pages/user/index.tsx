@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Avatar, Modal, Button, Table } from 'antd'
+import { Avatar, Modal, Table } from 'antd'
 import DropOption from '@/components/DropOption';
 import { Link } from 'react-router-dom';
 import { useRequest } from '@/hooks'
@@ -9,13 +9,15 @@ import type {
   IUserListResult,
   IQueryUserListParams,
 } from '@/services'
-import { ColumnType } from '@/typings'
+export type { ColumnType } from 'antd/lib/table/interface'
 import './mock'
 import styles from './index.less'
+import useLocale from '@/utils/useLocale';
 
 const { confirm } = Modal
 
 function UserPage() {
+  const t = useLocale()
   const [current, setCurrent] = useState<number>(1)
   const [pageSize, setPageSize] = useState<number>(10)
   const {
@@ -76,7 +78,7 @@ function UserPage() {
 
   const columns: ColumnType<IUserItem>[] = [
     {
-      title: 'Avatar',
+      title: t['column.avatar'],
       dataIndex: 'avatar',
       key: 'avatar',
       width: '7%',
@@ -84,7 +86,7 @@ function UserPage() {
       render: (text) => <Avatar style={{ marginLeft: 8 }} src={text} />,
     },
     {
-      title: 'Name',
+      title: t['column.name'],
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => <Link to={`/user/info/${record.id}`}>{text}</Link>,
@@ -179,3 +181,4 @@ function UserPage() {
 }
 
 export default UserPage
+

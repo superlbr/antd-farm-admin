@@ -7,11 +7,13 @@ import { loginUser, ILoginUserParams } from '@/services'
 import styles from './index.module.less'
 import logoUrl from '@/assets/logo.svg?inline'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const FormItem = Form.Item
 
 const Login = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { run: runLogin, loading } = useRequest(loginUser, {
     manual: true,
   })
@@ -23,7 +25,7 @@ const Login = () => {
         type: 'login',
         payload: values,
       })
-      window.location.replace('/user')
+      navigate('/dashboard')
     })
   }
 

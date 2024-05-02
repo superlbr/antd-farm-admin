@@ -15,14 +15,12 @@ import { GlobalState } from '@/store'
 import { config } from '@/configs'
 import { COMMON } from '@/configs/constants'
 import defaultAvatar from '@/assets/avatar.jpg'
-import useLocale from '@/utils/useLocale'
 import { GlobalContext } from '@/context'
 
 const { SubMenu } = Menu
 const { Paragraph } = Typography;
 
-function Header({ }) {
-  const t = useLocale()
+function Header() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   
@@ -135,13 +133,13 @@ function Header({ }) {
         <BellOutlined className={styles.iconFont} />
       </Badge>
     </Popover>,
-    <Menu key="menu" mode="horizontal" onClick={handleClickMenu}>
+    <Menu style={{ width: 120 }} key="menu" mode="horizontal" onClick={handleClickMenu}>
       <SubMenu
         key="User"
         title={
           <>
             <Avatar style={{ marginRight: 12 }} src={userInfo.avatar ? userInfo.avatar : defaultAvatar } />
-            <span>{ userInfo.name || t['header.user'] }</span>
+            <span>{ userInfo.name }</span>
           </>
         }
       >

@@ -1,8 +1,7 @@
-import { useNavigate, useLocation } from 'react-router-dom';
 import useRequest from './useRequest';
+import useStorage from './useStorage';
 
 export {
-  useNavigate,
-  useLocation,
   useRequest,
+  useStorage,
 }

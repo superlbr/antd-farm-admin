@@ -10,10 +10,10 @@ import store from './store';
 import { GlobalContext } from './context';
 import { router } from './router';
 import './index.less';
-import useStorage from './hooks/useStorage';
+import { useStorage } from './hooks';
 
 function Index() {
-  const [lang, setLang] = useStorage('arco-lang', 'en-US');
+  const [lang, setLang] = useStorage('antd-lang', 'en-US');
   function getLocale() {
     switch (lang) {
       case 'zh-CN':
