@@ -16,6 +16,7 @@ import { config } from '@/configs'
 import { COMMON } from '@/configs/constants'
 import defaultAvatar from '@/assets/avatar.jpg'
 import { GlobalContext } from '@/context'
+import { MenuItemType } from 'antd/es/menu/hooks/useItems'
 
 const { SubMenu } = Menu
 const { Paragraph } = Typography;
@@ -27,7 +28,7 @@ function Header() {
   const settings = useSelector((state: GlobalState) => state.settings)
   const userInfo = useSelector((state: GlobalState) => state.userInfo)
 
-  const { setLang, lang } = useContext(GlobalContext)
+  const { lang, setLang } = useContext(GlobalContext)
   const [notifications, onUpdateNotifications] = useState([])
 
   
@@ -79,17 +80,18 @@ function Header() {
       onClick={data => {
         setLang(data.key)
       }}
+      items={[
+        {
+          key: 'langList',
+          label: lang,
+          children: [
+            { key: 'zh-CN', label: '中文' },
+            { key: 'en-US', label: 'English' }
+          ]
+        }
+      ]}
       mode="horizontal"
-    >
-      <SubMenu key="langList" title={lang}>
-        <Menu.Item key='zh-CN'>
-          中文
-        </Menu.Item>
-        <Menu.Item key='en-US'>
-          English
-        </Menu.Item>
-      </SubMenu>
-    </Menu>,
+    />,
     <Popover
       placement="bottomRight"
       trigger="click"
@@ -134,20 +136,21 @@ function Header() {
         <BellOutlined className={styles.iconFont} />
       </Badge>
     </Popover>,
-    <Menu style={{ width: 120 }} key="menu" mode="horizontal" onClick={handleClickMenu}>
-      <SubMenu
-        key="User"
-        title={
-          <>
-            <Avatar style={{ marginRight: 12 }} src={userInfo.avatar ? userInfo.avatar : defaultAvatar } />
-            <span>{ userInfo.name }</span>
-          </>
-        }
-      >
-        <Menu.Item key="Profile">个人信息</Menu.Item>
-        <Menu.Item key="SignOut">注销</Menu.Item>
-      </SubMenu>
-    </Menu>,
+    <Menu style={{ width: 120 }} key="menu" mode="horizontal" onClick={handleClickMenu}
+      items={
+        [{
+          key: 'User',
+          label: <>
+          <Avatar style={{ marginRight: 12 }} src={userInfo.avatar ? userInfo.avatar : defaultAvatar } />
+          <span>{ userInfo.name }</span>
+        </>,
+          children: [
+            { key: 'Profile', label: '个人信息' },
+            { key: 'SignOut', label: '注销' }
+          ]
+        } as MenuItemType]
+      }
+      />,
   ]
 
   return (

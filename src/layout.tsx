@@ -7,7 +7,7 @@ import {
 } from 'antd';
 import { enquireScreen, unenquireScreen } from 'enquire-js'
 import { useDispatch, useSelector } from 'react-redux'
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { pathToRegexp } from 'path-to-regexp'
 import { config } from '@/configs'
 import { queryAncestors } from '@/utils'
@@ -15,6 +15,8 @@ import Icons from '@/components/Icons'
 import styles from './layout.module.less'
 import { GlobalState } from '@/store';
 import NotFoundPage from './pages/404';
+
+import { BreadcrumbItemType } from 'antd/lib/breadcrumb/Breadcrumb';
 
 const { Content } = Layout
 
@@ -27,10 +29,9 @@ function DefaultLayout() {
   const settings = useSelector((state: GlobalState) => state.settings)
   const routeList = useSelector((state: GlobalState) => state.routeList)
   const permissions = useSelector((state: GlobalState) => state.permissions)
-  const user = useSelector((state: GlobalState) => state.userInfo)
 
   const [hasPermission, setHasPermission] = useState(false)
-  const [breadList, setBreadList] = useState([])
+  const [breadList, setBreadList] = useState([] as BreadcrumbItemType[])
 
   useEffect(() => {
     enquireHandler = enquireScreen((mobile: boolean) => {
@@ -60,6 +61,22 @@ function DefaultLayout() {
 
   // mpid is equal to -1 is not a available menu.
   const menus = routeList.filter(_ => _.mpid !== -1)
+  const generateBreadcrumbs = (paths) => {
+    return paths.filter(x => x).map((item, key) => {
+      const content = (
+        <>
+          {item.icon &&
+            Icons(item.icon)}
+          <span style={{ marginLeft: 4 }}>{item.name}</span>
+        </>
+      )
+
+      return {
+        href: paths.length - 1 !== key ? (item.route || '') : '',
+        title: content
+      }
+    })
+  }
 
   // Find the breadcrumb navigation of the current route match and all its ancestors.
   useEffect(() => {
@@ -84,36 +101,8 @@ function DefaultLayout() {
     setBreadList(breadcrumbList)
   }, [location, routeList, permissions])
 
-  const generateBreadcrumbs = (paths = []) => {
-    return paths.filter(x => x).map((item, key) => {
-      const content = (
-        <>
-          {item.icon &&
-            Icons(item.icon)}
-          <span style={{ marginLeft: 4 }}>{item.name}</span>
-        </>
-      )
-
-      return {
-        href: paths.length - 1 !== key ? (item.route || '') : '',
-        title: content
-      }
-    })
-  }
-
-  const headerProps = {
-    user,
-    menus,
-    collapsed: settings.collapsed,
-    fixed: config.fixedHeader,
-  }
-
   const siderProps = {
     menus,
-    theme: settings.theme,
-    isMobile: settings.isMobile,
-    collapsed: settings.collapsed,
-    onCollapseChange,
   }
 
   return (
@@ -141,7 +130,7 @@ function DefaultLayout() {
         style={{ paddingTop: config.fixedHeader ? 72 : 0 }}
         id="primaryLayout"
       >
-        <Header {...headerProps} />
+        <Header />
         <Content className={styles.content}>
           <Breadcrumb className={styles.bread} items={breadList} />
           {hasPermission ? <Outlet /> : <NotFoundPage />}
