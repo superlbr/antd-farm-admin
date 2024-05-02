@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   ArrowsAltOutlined, BellOutlined, MenuFoldOutlined, MenuUnfoldOutlined
 } from '@ant-design/icons'
@@ -17,8 +17,10 @@ import { COMMON } from '@/configs/constants'
 import defaultAvatar from '@/assets/avatar.jpg'
 import { GlobalContext } from '@/context'
 import { MenuItemType } from 'antd/es/menu/hooks/useItems'
+import { IAdminNotificationItem, IAdminNotificationResult, adminNotificationUpdate, queryAdminNotification } from '@/services'
+import { useRequest } from '@/hooks'
+import './mock'
 
-const { SubMenu } = Menu
 const { Paragraph } = Typography;
 
 function Header() {
@@ -29,9 +31,23 @@ function Header() {
   const userInfo = useSelector((state: GlobalState) => state.userInfo)
 
   const { lang, setLang } = useContext(GlobalContext)
-  const [notifications, onUpdateNotifications] = useState([])
+  const {
+    data: { list, total },
+    loading,
+    run: runQueryAdminNotificationList,
+  } = useRequest<IAdminNotificationResult>(queryAdminNotification, {
+    initialData: {
+      list: [],
+      total: 0,
+    },
+    manual: true,
+  })
 
-  
+  useEffect(() => {
+    runQueryAdminNotificationList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const onFindallNotifications = () => {
     navigate(`/account/notification`)
   }
@@ -64,10 +80,15 @@ function Header() {
     if (screenfull.isEnabled) screenfull.toggle()
   }
 
-  const onDealNotification = item => {
+  const onDealNotification = (item: IAdminNotificationItem) => {
     if (item.route) {
       window.open(item.route)
     }
+  }
+  const onUpdateNotifications = (id: number, data: { status: number }) => {
+    adminNotificationUpdate({ id, ...data }).then(() => {
+      runQueryAdminNotificationList()
+    })
   }
 
   const rightContent = [
@@ -83,7 +104,7 @@ function Header() {
       items={[
         {
           key: 'langList',
-          label: lang,
+          label: lang === 'zh-CN' ? '中文' : 'English',
           children: [
             { key: 'zh-CN', label: '中文' },
             { key: 'en-US', label: 'English' }
@@ -102,7 +123,8 @@ function Header() {
         <div className={styles.notification}>
           <List
             itemLayout="horizontal"
-            dataSource={notifications}
+            dataSource={list}
+            loading={loading}
             locale={{
               emptyText: '没有新的通知',
             }}
@@ -111,11 +133,11 @@ function Header() {
                 onClick={() => onDealNotification(item)}>
                 <List.Item.Meta
                   title={<Paragraph ellipsis={{ rows: 3 }}>{item.content}</Paragraph>}
-                  description={item.date}
+                  description={item.desc}
                 />
                 <Tag
                   closable
-                  onClose={() => onUpdateNotifications(item.id)}
+                  onClose={() => onUpdateNotifications(item.id, { status: 0 })}
                   color={COMMON.tags[item.level].color}>{COMMON.tags[item.level].info}</Tag>
               </List.Item>
             )}
@@ -129,7 +151,7 @@ function Header() {
       }
     >
       <Badge
-        count={notifications.length}
+        count={total}
         offset={[-10, 10]}
         className={styles.iconButton}
       >

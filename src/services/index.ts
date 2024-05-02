@@ -1,8 +1,10 @@
 import user, { TUserAPI } from '@/services/user'
+import admin, { TAdminAPI } from '@/services/admin'
 import createService, { TService } from '@/utils/createService'
 
 const APIs = {
   ...user,
+  ...admin,
 }
 
 type RecordService<T> = {
@@ -64,11 +66,28 @@ export interface IQueryUserListParams {
   pageSize?: number
 }
 
+export interface IAdminNotificationItem {
+  id: number,
+  content: string,
+  desc?: string,
+  level: number,
+  route?: string,
+  status: number,
+}
+
+export interface IAdminNotificationResult {
+  list: IAdminNotificationItem[],
+  total: number,
+}
+
 export const queryUserList = createService<
   IUserListResult,
   IQueryUserListParams
 >(user.queryUserList)
-
 export const userUpdate = createService(user.updateUser)
-
 export const userRemove = createService(user.removeUser)
+
+export const queryAdminNotification = createService<IAdminNotificationResult>(
+  admin.queryAdminNotificationList,
+)
+export const adminNotificationUpdate = createService(admin.adminNotificationUpdate)
