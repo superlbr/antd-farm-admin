@@ -9,7 +9,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { GlobalState } from '@/store'
 import LogoUrl from '@/assets/logo.svg?inline'
 
-function Sider({ menus }) {
+interface SiderProps {
+  menus: any[]
+}
+
+function Sider({ menus }: SiderProps) {
   const dispatch = useDispatch()
   const settings = useSelector((state: GlobalState) => state.settings)
 

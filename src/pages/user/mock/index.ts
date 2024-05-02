@@ -2,7 +2,7 @@ import setupMock from "@/utils/setupMock";
 import Mock from "mockjs";
 
 let usersList = Mock.mock({
-	"data|4-6": [
+	"data|8-12": [
 		{
 			"id|+1": 1,
 			avatar: "@image('100x100', '@color', 'Hi')",
@@ -24,7 +24,7 @@ setupMock({
 
 			return {
 				list: usersList.data,
-				total: 4
+				total: usersList.data.length
 			};
 		});
 		Mock.mock(new RegExp("/api/v1/user/update"), (options) => {

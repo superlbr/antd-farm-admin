@@ -2,17 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { Avatar, Modal, Table } from 'antd'
 import DropOption from '@/components/DropOption';
 import { Link } from 'react-router-dom';
-import { useRequest } from '@/hooks'
+import { useLocale, useRequest } from '@/hooks'
 import { queryUserList, userUpdate, userRemove } from '@/services'
 import type {
   IUserItem,
   IUserListResult,
   IQueryUserListParams,
 } from '@/services'
-export type { ColumnType } from 'antd/lib/table/interface'
-import './mock'
+import type { ColumnType } from 'antd/lib/table/interface'
 import styles from './index.less'
-import useLocale from '@/utils/useLocale';
+import './mock'
 
 const { confirm } = Modal
 
@@ -63,10 +62,10 @@ function UserPage() {
     })
   }
 
-  const handleMenuClick = (record, e) => {
+  const handleMenuClick = (record: IUserItem, e: { key: string }) => {
     if (e.key === '1') {
       updateUser(record)
-    } else if (e.key === '3') {
+    } else if (e.key === '2') {
       confirm({
         title: '确认要删除该记录吗？?',
         onOk() {
@@ -144,7 +143,7 @@ function UserPage() {
               key: '1',
               name: '修改',
             }, {
-              key: '3',
+              key: '2',
               name: '删除',
             }
           ]}
@@ -161,7 +160,7 @@ function UserPage() {
   }
 
   return (
-    <div className={styles.error}>
+    <div className={styles.table}>
       <Table
         bordered
         loading={loading}
@@ -171,7 +170,7 @@ function UserPage() {
         scroll={{ x: 1200 }}
         rowKey={(record: { id: any; }) => record.id}
         pagination={pagination}
-        onChange={(page: { current: number; pageSize: number; }) => {
+        onChange={(page: { current: number; pageSize: number }) => {
           setCurrent(page.current as number)
           setPageSize(page.pageSize as number)
         }}

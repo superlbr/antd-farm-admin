@@ -1,5 +1,4 @@
 import { cloneDeep } from 'lodash'
-import { Path, pathToRegexp } from 'path-to-regexp'
 
 /**
  * Convert an array to a tree-structured array.

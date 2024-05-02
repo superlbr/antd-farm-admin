@@ -8,8 +8,16 @@ import {
   queryAncestors,
 } from '@/utils'
 import { useDispatch } from 'react-redux'
+import type { MenuTheme } from 'antd/lib/menu'
 
-function Menus({ menus, collapsed, isMobile, theme }) {
+type MenusProps = {
+  menus: any[],
+  collapsed: Boolean,
+  isMobile: Boolean,
+  theme?: MenuTheme,
+}
+
+function Menus({ menus, collapsed, isMobile, theme }: MenusProps) {
   const [openKeys, setOpenKeys] = useState([] as string[])
   const dispatch = useDispatch()
   const navigate = useNavigate()

@@ -30,6 +30,7 @@ function Header() {
   const { setLang, lang } = useContext(GlobalContext)
   const [notifications, onUpdateNotifications] = useState([])
 
+  
   const onFindallNotifications = () => {
     navigate(`/account/notification`)
   }
