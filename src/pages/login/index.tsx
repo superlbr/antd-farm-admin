@@ -8,25 +8,35 @@ import styles from './index.module.less'
 import logoUrl from '@/assets/logo.svg?inline'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import './mock'
 
 const FormItem = Form.Item
 
 const Login = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { run: runLogin, loading } = useRequest(loginUser, {
+
+  const {
+    run: runLogin, 
+    loading
+  } = useRequest(loginUser, {
     manual: true,
+    onSuccess: (res) => {
+      if (res.data) {
+        dispatch({
+          type: 'login',
+          payload: res.data,
+        })
+        const { route_default = '/dashboard' } = res.data
+        navigate(route_default)
+      } else {
+        console.log('登录失败')
+      }
+    }
   })
 
   const handleFinish = (values: ILoginUserParams) => {
-    runLogin(values).then(() => {
-      values.name = "David"
-      dispatch({
-        type: 'login',
-        payload: values,
-      })
-      navigate('/dashboard')
-    })
+    runLogin(values)
   }
 
   return (

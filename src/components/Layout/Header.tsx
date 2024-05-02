@@ -164,7 +164,7 @@ function Header() {
           key: 'User',
           label: <>
           <Avatar style={{ marginRight: 12 }} src={userInfo.avatar ? userInfo.avatar : defaultAvatar } />
-          <span>{ userInfo.name }</span>
+          <span>{ userInfo.name || 'Guest' }</span>
         </>,
           children: [
             { key: 'Profile', label: '个人信息' },

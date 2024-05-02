@@ -10,7 +10,7 @@ const APIs = {
 type RecordService<T> = {
   [P in keyof T]: TService
 }
-type TAPIService = RecordService<TUserAPI>
+type TAPIService = RecordService<TUserAPI & TAdminAPI>
 const APIService = {} as TAPIService
 for (const key in APIs) {
   APIService[key] = createService(APIs[key])
@@ -25,6 +25,8 @@ export const {
   removeUserList,
 } = APIService
 
+// -user
+// --user info
 export interface IUserInfo {
   avatar: string
   id: number
@@ -44,6 +46,7 @@ export interface ILoginUserParams {
 
 export const loginUser = createService<any, ILoginUserParams>(user.loginUser)
 
+// --user list
 export interface IUserItem {
   address: string
   age: number
@@ -66,6 +69,15 @@ export interface IQueryUserListParams {
   pageSize?: number
 }
 
+export const queryUserList = createService<
+  IUserListResult,
+  IQueryUserListParams
+>(user.queryUserList)
+export const userUpdate = createService(user.updateUser)
+export const userRemove = createService(user.removeUser)
+
+// -admin
+// --notification
 export interface IAdminNotificationItem {
   id: number,
   content: string,
@@ -79,13 +91,6 @@ export interface IAdminNotificationResult {
   list: IAdminNotificationItem[],
   total: number,
 }
-
-export const queryUserList = createService<
-  IUserListResult,
-  IQueryUserListParams
->(user.queryUserList)
-export const userUpdate = createService(user.updateUser)
-export const userRemove = createService(user.removeUser)
 
 export const queryAdminNotification = createService<IAdminNotificationResult>(
   admin.queryAdminNotificationList,
