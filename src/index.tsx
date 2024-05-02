@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Provider, useSelector } from 'react-redux'
+import { Provider } from 'react-redux'
 import { ConfigProvider } from 'antd'
 import { RouterProvider } from 'react-router-dom'
 

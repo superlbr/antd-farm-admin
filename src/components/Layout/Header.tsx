@@ -106,8 +106,9 @@ function Header({ }) {
               emptyText: '没有新的通知',
             }}
             renderItem={item => (
-              <List.Item className={styles.notificationItem}>
-                <List.Item.Meta onClick={() => onDealNotification(item)}
+              <List.Item className={styles.notificationItem} 
+                onClick={() => onDealNotification(item)}>
+                <List.Item.Meta
                   title={<Paragraph ellipsis={{ rows: 3 }}>{item.content}</Paragraph>}
                   description={item.date}
                 />
